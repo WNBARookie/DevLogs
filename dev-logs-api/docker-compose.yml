@@ -1,0 +1,17 @@
+services:
+  dev-logs-api:
+    build: .
+    image: 'dev-logs-api'
+    restart: unless-stopped
+    env_file: ./.env
+    ports:
+      - '8080:8080'
+    environment:
+      - NODE_ENV=$NODE_ENV
+      - PORT=$PORT
+      - MONGO_USER=$MONGO_USER
+      - MONGO_PASSWORD=$MONGO_PASSWORD
+      - MONGO_DB=$MONGO_DB
+    volumes:
+      - ./src:/usr/dev-logs-api/
+
