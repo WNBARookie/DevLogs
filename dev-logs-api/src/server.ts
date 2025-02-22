@@ -18,15 +18,14 @@ app.use(
   })
 );
 
-// connectDB();
+connectDB();
 
 app.use(cors());
-
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-// app.use('/api/xxx', require('./routes/xxx'));
+app.use('/api/categories', require('./routes/categoryRoutes'));
 
 app.use(responseHandler);
 
@@ -37,5 +36,3 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log();
 });
-
-
