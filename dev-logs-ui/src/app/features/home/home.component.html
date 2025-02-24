@@ -1,21 +1,9 @@
-<!-- <div class="card flex justify-center">
-  <p-button label="Check" />
-</div> -->
-
 <div class="grid">
-  <div class="col">
-    <p-card header="Personal"> </p-card>
-
-    <!-- <div class="text-center p-3 border-round-sm bg-primary font-bold">1</div> -->
+  @for (category of categories$ | async; track category.category) {
+  <div class="col-4">
+    <p-card header="{{category.category}}"></p-card>
   </div>
-  <div class="col">
-    <p-card header="Professional"> </p-card>
-
-    <!-- <div class="text-center p-3 border-round-sm bg-primary font-bold">2</div> -->
-  </div>
-  <div class="col">
-    <p-card header="Educational"> </p-card>
-
-    <!-- <div class="text-center p-3 border-round-sm bg-primary font-bold">3</div> -->
-  </div>
+  } @empty {
+  <div>There are no items.</div>
+  }
 </div>
