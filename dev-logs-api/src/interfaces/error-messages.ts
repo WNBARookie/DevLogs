@@ -1,10 +1,17 @@
 export interface ErrorMessages {
   // summary
-  sampleSummmary: string;
   somethingWentWrong: string;
+  missingInformation: string;
+  itemNotFound: string;
+  unableToCreate: string;
 
   // details
-  sampleDetails: string;
   somethingWentWrongDetails: string;
+  addAllFields: string;
+  addDescription: string;
+  addTitle: string;
+  projectNotFound: string;
+  addCategoryId: string;
+  projectNotCreated: string;
 }
 

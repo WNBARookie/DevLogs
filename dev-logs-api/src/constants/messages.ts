@@ -3,20 +3,32 @@ import { Messages } from '../interfaces';
 export const MessageConstants: Messages = {
   successMessages: {
     // summary
-    sampleSummmary: 'Sample Summary Success',
+    successfullyCompleted: 'Successfully completed',
+    successfullyCreated: 'Successfully created',
+    successfullyDeleted: 'Successfully deleted',
+    successfullyUpdated: 'Successfully updated',
 
     // details
-    sampleDetails: 'Sample Details Success'
+    projectSuccessfullyCreated: 'Project successfully created',
+    projectSuccessfullyDeleted: 'Project successfully deleted',
+    projectSuccessfullyUpdated: 'Project successfully updated'
   },
 
   errorMessages: {
     // summary
-    sampleSummmary: 'Sample Summary Error',
     somethingWentWrong: 'Something went wrong',
+    missingInformation: 'Missing information',
+    itemNotFound: 'Item not found',
+    unableToCreate: 'Unable to create',
 
     // details
-    sampleDetails: 'Sample Details Error',
-    somethingWentWrongDetails: 'Something went wrong on the server side'
+    somethingWentWrongDetails: 'Something went wrong on the server side',
+    addAllFields: 'Please add all fields',
+    addDescription: 'Please add description',
+    addTitle: 'Please add title',
+    addCategoryId: 'Please add category Id',
+    projectNotFound: 'Project was not found',
+    projectNotCreated: 'Project was not created'
   },
 };
 

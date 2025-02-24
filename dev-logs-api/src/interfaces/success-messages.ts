@@ -1,8 +1,13 @@
 export interface SuccessMessages {
   // summary
-  sampleSummmary: string;
+  successfullyCompleted: string;
+  successfullyCreated: string;
+  successfullyDeleted: string;
+  successfullyUpdated: string;
 
   // details
-  sampleDetails: string;
+  projectSuccessfullyCreated: string;
+  projectSuccessfullyDeleted: string;
+  projectSuccessfullyUpdated: string;
 }
 
