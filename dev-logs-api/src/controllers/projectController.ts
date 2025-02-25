@@ -9,10 +9,9 @@ import { Project } from "../interfaces";
 // @access  Private
 // @desc    Get all projects by category 
 export const getAllProjectsByCategory = expressAsyncHandler(async (req: any, res, next) => {
-    console.log(req.params)
     let projects: Project[] = [];
 
-    await ProjectModel.find({ categoryId: req.params.categoryId })
+    await ProjectModel.find({ categoryId: req.params.id })
         .then((data) => {
             data.forEach(e => {
                 let p: Project = {
@@ -32,13 +31,12 @@ export const getAllProjectsByCategory = expressAsyncHandler(async (req: any, res
 
 // @access  Private
 // @desc    Get project by id
-// @route   GET /api/projects/:id
+// @route   GET /api/projects/project/:id
 export const getProjectById = expressAsyncHandler(async (req: any, res, next) => {
   let project !: Project;
   await ProjectModel.findById(req.params.id)
     .then((data) => {
       if(data) {
-        console.log(data)
         project = {
           id: data._id.toString(),
           title: data.title,
