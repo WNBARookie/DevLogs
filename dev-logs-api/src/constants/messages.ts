@@ -27,8 +27,10 @@ export const MessageConstants: Messages = {
     addDescription: 'Please add description',
     addTitle: 'Please add title',
     addCategoryId: 'Please add category Id',
+    addProjectId: 'Please add project Id',
     projectNotFound: 'Project was not found',
-    projectNotCreated: 'Project was not created'
+    projectNotCreated: 'Project was not created',
+    projectAlreadyExists: 'A project with the same title in the same category already exists'
   },
 };
 

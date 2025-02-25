@@ -3,11 +3,11 @@ import { createProject, deleteProject, getAllProjectsByCategory, updateProject }
 
 const router = express.Router();
 
-router.get('/:id', getAllProjectsByCategory);
+router.get('/:categoryId', getAllProjectsByCategory);
 
 router.post('/', createProject);
 
-router.put('/:id', updateProject);
+router.put('/', updateProject);
 
 router.delete('/:id', deleteProject);
 

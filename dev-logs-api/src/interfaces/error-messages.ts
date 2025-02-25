@@ -12,6 +12,8 @@ export interface ErrorMessages {
   addTitle: string;
   projectNotFound: string;
   addCategoryId: string;
+  addProjectId: string;
   projectNotCreated: string;
+  projectAlreadyExists: string
 }
 
