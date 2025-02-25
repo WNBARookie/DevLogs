@@ -30,6 +30,30 @@ export const getAllProjectsByCategory = expressAsyncHandler(async (req: any, res
 });
 
 
+// @access  Private
+// @desc    Get project by id
+// @route   GET /api/projects/:id
+export const getProjectById = expressAsyncHandler(async (req: any, res, next) => {
+  let project !: Project;
+  await ProjectModel.findById(req.params.id)
+    .then((data) => {
+      if(data) {
+        console.log(data)
+        project = {
+          id: data._id.toString(),
+          title: data.title,
+          description: data.description,
+          categoryId: data.categoryId._id.toString(),
+        }
+      }
+    
+    })
+    .catch((err) => next(ApiResponse.badRequest(MessageConstants.errorMessages.somethingWentWrong, err, 400, req.originalUrl)));
+
+  res.status(200).json(project);
+});
+
+
 // @desc    Create project
 // @route   POST /api/projects
 // @access  Private
@@ -77,7 +101,6 @@ export const createProject = expressAsyncHandler(async (req: any, res, next) => 
 // @route   PUT /api/projects
 // @access  Private
 export const updateProject = expressAsyncHandler(async (req: any, res, next) => {
-    console.log(req.body)
     if (!req.body.title) {
         next(ApiResponse.badRequest(MessageConstants.errorMessages.missingInformation, MessageConstants.errorMessages.addTitle, 400, req.originalUrl));
         return;
@@ -95,13 +118,13 @@ export const updateProject = expressAsyncHandler(async (req: any, res, next) => 
 
     const project = await ProjectModel.findById(req.body.projectId);
 
-    if(!project) {
+    if (!project) {
         next(ApiResponse.badRequest(MessageConstants.errorMessages.itemNotFound, MessageConstants.errorMessages.projectNotFound, 400, req.originalUrl));
         return;
     }
 
     await ProjectModel.findByIdAndUpdate(
-        {_id: req.body.projectId},
+        { _id: req.body.projectId },
         {
             title: req.body.title,
             description: req.body.description
@@ -110,15 +133,14 @@ export const updateProject = expressAsyncHandler(async (req: any, res, next) => 
             new: true
         }
     )
-    .then(data => {
-        console.log(data)
-        next(ApiResponse.goodRequest(MessageConstants.successMessages.successfullyUpdated, MessageConstants.successMessages.projectSuccessfullyUpdated, 200, req.originalUrl));
-    })
-    .catch(err => {
-        console.log(err)
-        next(ApiResponse.badRequest(MessageConstants.errorMessages.somethingWentWrong, MessageConstants.errorMessages.somethingWentWrongDetails, 400, req.originalUrl));
-        return;
-    });
+        .then(data => {
+            next(ApiResponse.goodRequest(MessageConstants.successMessages.successfullyUpdated, MessageConstants.successMessages.projectSuccessfullyUpdated, 200, req.originalUrl));
+            return;
+        })
+        .catch(err => {
+            next(ApiResponse.badRequest(MessageConstants.errorMessages.somethingWentWrong, MessageConstants.errorMessages.somethingWentWrongDetails, 400, req.originalUrl));
+            return;
+        });
 
     return;
 })
@@ -129,21 +151,20 @@ export const updateProject = expressAsyncHandler(async (req: any, res, next) => 
 export const deleteProject = expressAsyncHandler(async (req: any, res, next) => {
     const project = await ProjectModel.findById(req.params.id);
 
-    if(!project) {
+    if (!project) {
         next(ApiResponse.badRequest(MessageConstants.errorMessages.itemNotFound, MessageConstants.errorMessages.projectNotFound, 400, req.originalUrl));
         return;
     }
 
-    await ProjectModel.findByIdAndDelete({_id: req.params.id})
-    .then(data => {
-        next(ApiResponse.goodRequest(MessageConstants.successMessages.successfullyDeleted, MessageConstants.successMessages.projectSuccessfullyDeleted, 200, req.originalUrl));
-        return;
-    })
-    .catch(err => {
-        console.log(err)
-        next(ApiResponse.badRequest(MessageConstants.errorMessages.somethingWentWrong, MessageConstants.errorMessages.somethingWentWrongDetails, 400, req.originalUrl));
-        return;    
-    });
+    await ProjectModel.findByIdAndDelete({ _id: req.params.id })
+        .then(data => {
+            next(ApiResponse.goodRequest(MessageConstants.successMessages.successfullyDeleted, MessageConstants.successMessages.projectSuccessfullyDeleted, 200, req.originalUrl));
+            return;
+        })
+        .catch(err => {
+            next(ApiResponse.badRequest(MessageConstants.errorMessages.somethingWentWrong, MessageConstants.errorMessages.somethingWentWrongDetails, 400, req.originalUrl));
+            return;
+        });
 
     return;
 })

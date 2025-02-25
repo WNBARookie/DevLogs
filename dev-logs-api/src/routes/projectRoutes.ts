@@ -1,9 +1,10 @@
 import express from 'express';
-import { createProject, deleteProject, getAllProjectsByCategory, updateProject } from "../controllers/projectController";
+import { createProject, deleteProject, getAllProjectsByCategory, getProjectById, updateProject } from "../controllers/projectController";
 
 const router = express.Router();
 
 router.get('/:categoryId', getAllProjectsByCategory);
+router.get('/project/:id', getProjectById);
 
 router.post('/', createProject);
 

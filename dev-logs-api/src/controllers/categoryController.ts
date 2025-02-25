@@ -24,3 +24,23 @@ export const getAllCategories = expressAsyncHandler(async (req: any, res, next) 
 
   res.status(200).json(categories);
 });
+
+// @access  Private
+// @desc    Get category by id
+// @route   GET /api/categories/:id
+export const getCategoryById = expressAsyncHandler(async (req: any, res, next) => {
+  let category !: Category;
+  await CategoryModel.findById(req.params.id)
+    .then((data) => {
+      if(data) {
+        category = {
+          id: data._id.toString(),
+          category: data.category
+        }
+      }
+    
+    })
+    .catch((err) => next(ApiResponse.badRequest(MessageConstants.errorMessages.somethingWentWrong, err, 400, req.originalUrl)));
+
+  res.status(200).json(category);
+});
