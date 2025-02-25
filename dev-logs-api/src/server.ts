@@ -27,6 +27,7 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use('/api/categories', require('./routes/categoryRoutes'));
 app.use('/api/projects', require('./routes/projectRoutes'));
+app.use('/api/items', require('./routes/itemRoutes'));
 
 app.use(responseHandler);
 

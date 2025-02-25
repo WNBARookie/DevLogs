@@ -13,7 +13,13 @@ export interface ErrorMessages {
   projectNotFound: string;
   addCategoryId: string;
   addProjectId: string;
+  addItemId: string;
   projectNotCreated: string;
   projectAlreadyExists: string
+  addSkillsApplied: string;
+  addLessonsLearned: string;
+  addDateCompleted: string
+  itemNotCreated: string;
+  itemAlreadyExists: string;
 }
 

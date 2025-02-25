@@ -9,5 +9,8 @@ export interface SuccessMessages {
   projectSuccessfullyCreated: string;
   projectSuccessfullyDeleted: string;
   projectSuccessfullyUpdated: string;
+  itemSuccessfullyCreated: string;
+  itemSuccessfullyDeleted: string;
+  itemSuccessfullyUpdated: string;
 }
 

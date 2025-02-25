@@ -11,7 +11,10 @@ export const MessageConstants: Messages = {
     // details
     projectSuccessfullyCreated: 'Project successfully created',
     projectSuccessfullyDeleted: 'Project successfully deleted',
-    projectSuccessfullyUpdated: 'Project successfully updated'
+    projectSuccessfullyUpdated: 'Project successfully updated',
+    itemSuccessfullyCreated: 'Item successfully created',
+    itemSuccessfullyDeleted: 'Item successfully deleted',
+    itemSuccessfullyUpdated: 'Item successfully updated'
   },
 
   errorMessages: {
@@ -28,9 +31,14 @@ export const MessageConstants: Messages = {
     addTitle: 'Please add title',
     addCategoryId: 'Please add category Id',
     addProjectId: 'Please add project Id',
+    addSkillsApplied: 'Please add skills applied',
+    addLessonsLearned: 'Please add lessons learned',
+    addDateCompleted: 'Please add date completed',
     projectNotFound: 'Project was not found',
     projectNotCreated: 'Project was not created',
-    projectAlreadyExists: 'A project with the same title in the same category already exists'
+    projectAlreadyExists: 'A project with the same title in the same category already exists',
+    itemNotCreated: 'Item was not created',
+    itemAlreadyExists: 'A Item with the same title in the same project already exists'
   },
 };
 

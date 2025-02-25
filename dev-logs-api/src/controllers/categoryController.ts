@@ -9,7 +9,7 @@ import { Category } from '../interfaces';
 // @route   GET /api/categories/all
 export const getAllCategories = expressAsyncHandler(async (req: any, res, next) => {
   let categories: Category[] = []
-  
+
   await CategoryModel.find()
     .then((data) => {
       data.forEach(e => {
@@ -20,7 +20,10 @@ export const getAllCategories = expressAsyncHandler(async (req: any, res, next) 
         categories.push(c);
       });
     })
-    .catch((err) => next(ApiResponse.badRequest(MessageConstants.errorMessages.somethingWentWrong, err, 400, req.originalUrl)));
+    .catch((err) => { 
+      console.log(err); 
+      next(ApiResponse.badRequest(MessageConstants.errorMessages.somethingWentWrong, err, 400, req.originalUrl)) 
+    });
 
   res.status(200).json(categories);
 });
@@ -32,15 +35,18 @@ export const getCategoryById = expressAsyncHandler(async (req: any, res, next) =
   let category !: Category;
   await CategoryModel.findById(req.params.id)
     .then((data) => {
-      if(data) {
+      if (data) {
         category = {
           id: data._id.toString(),
           category: data.category
         }
       }
-    
+
     })
-    .catch((err) => next(ApiResponse.badRequest(MessageConstants.errorMessages.somethingWentWrong, err, 400, req.originalUrl)));
+    .catch((err) => { 
+      console.log(err); 
+      next(ApiResponse.badRequest(MessageConstants.errorMessages.somethingWentWrong, err, 400, req.originalUrl)) 
+    });
 
   res.status(200).json(category);
 });

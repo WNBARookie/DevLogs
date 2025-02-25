@@ -23,7 +23,10 @@ export const getAllProjectsByCategory = expressAsyncHandler(async (req: any, res
                 projects.push(p);
             });
         })
-        .catch((err) => next(ApiResponse.badRequest(MessageConstants.errorMessages.somethingWentWrong, err, 400, req.originalUrl)));
+        .catch((err) => {
+            console.log(err)
+            next(ApiResponse.badRequest(MessageConstants.errorMessages.somethingWentWrong, err, 400, req.originalUrl))
+        });
 
     res.status(200).json(projects);
 });
@@ -33,22 +36,25 @@ export const getAllProjectsByCategory = expressAsyncHandler(async (req: any, res
 // @desc    Get project by id
 // @route   GET /api/projects/project/:id
 export const getProjectById = expressAsyncHandler(async (req: any, res, next) => {
-  let project !: Project;
-  await ProjectModel.findById(req.params.id)
-    .then((data) => {
-      if(data) {
-        project = {
-          id: data._id.toString(),
-          title: data.title,
-          description: data.description,
-          categoryId: data.categoryId._id.toString(),
-        }
-      }
-    
-    })
-    .catch((err) => next(ApiResponse.badRequest(MessageConstants.errorMessages.somethingWentWrong, err, 400, req.originalUrl)));
+    let project !: Project;
+    await ProjectModel.findById(req.params.id)
+        .then((data) => {
+            if (data) {
+                project = {
+                    id: data._id.toString(),
+                    title: data.title,
+                    description: data.description,
+                    categoryId: data.categoryId._id.toString(),
+                }
+            }
 
-  res.status(200).json(project);
+        })
+        .catch((err) => {
+            console.log(err)
+            next(ApiResponse.badRequest(MessageConstants.errorMessages.somethingWentWrong, err, 400, req.originalUrl))
+        });
+
+    res.status(200).json(project);
 });
 
 
@@ -89,6 +95,7 @@ export const createProject = expressAsyncHandler(async (req: any, res, next) => 
             return;
         })
         .catch((err) => {
+            console.log(err)
             next(ApiResponse.badRequest(MessageConstants.errorMessages.somethingWentWrong, MessageConstants.errorMessages.somethingWentWrongDetails, 400, req.originalUrl));
             return;
         });
@@ -136,6 +143,7 @@ export const updateProject = expressAsyncHandler(async (req: any, res, next) => 
             return;
         })
         .catch(err => {
+            console.log(err)
             next(ApiResponse.badRequest(MessageConstants.errorMessages.somethingWentWrong, MessageConstants.errorMessages.somethingWentWrongDetails, 400, req.originalUrl));
             return;
         });
@@ -160,6 +168,7 @@ export const deleteProject = expressAsyncHandler(async (req: any, res, next) => 
             return;
         })
         .catch(err => {
+            console.log(err)
             next(ApiResponse.badRequest(MessageConstants.errorMessages.somethingWentWrong, MessageConstants.errorMessages.somethingWentWrongDetails, 400, req.originalUrl));
             return;
         });

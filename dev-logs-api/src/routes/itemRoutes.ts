@@ -4,7 +4,7 @@ import { createItem, deleteItem, getAllItemsForProject, getItemById, updateItem 
 const router = express.Router();
 
 router.get('/:id', getAllItemsForProject);
-router.get('/items/:id', getItemById);
+router.get('/item/:id', getItemById);
 
 router.post('/', createItem);
 
