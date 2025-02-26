@@ -12,7 +12,7 @@ import { CardModule } from 'primeng/card';
     ButtonModule,
     CardModule
   ],
-  exports:[
+  exports: [
     ButtonModule,
     CardModule
   ]

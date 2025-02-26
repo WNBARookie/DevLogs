@@ -1,0 +1,15 @@
+
+<div class="flex align-items-center justify-content-between">
+    @if(category$ | async; as category) {
+        <h2>{{category.category}}</h2>
+    }
+    <p-button icon="pi pi-plus" [rounded]="true"/>
+</div>
+
+@for (project of projects$ | async; track project.title) {
+    <div class="col-12">
+      <p-card header="{{project.title}}" ></p-card>
+    </div>
+    } @empty {
+    <div>There are no projects.</div>
+    }

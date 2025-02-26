@@ -1,7 +1,7 @@
 <div class="grid">
   @for (category of categories$ | async; track category.category) {
   <div class="col-4">
-    <p-card header="{{category.category}}"></p-card>
+    <p-card header="{{category.category}}" (click)="goToProjectsForCategory(category)"></p-card>
   </div>
   } @empty {
   <div>There are no items.</div>

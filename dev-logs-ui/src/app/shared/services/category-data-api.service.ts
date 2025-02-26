@@ -12,13 +12,19 @@ export class CategoryDataApiService {
   baseURL: string = environment.baseUrl;
   private categoryEndpoints: CategoryDataEndpoints
 
-  constructor(private http: HttpClient, apiConfig: ApiConfigService) { 
+  constructor(private http: HttpClient, apiConfig: ApiConfigService) {
     this.categoryEndpoints = apiConfig.getApi('categoryData');
   }
 
   getAllCategories(): Observable<Category[]> {
-    return this.http.get<Category[]> (
+    return this.http.get<Category[]>(
       this.baseURL + this.categoryEndpoints.getAllCategories
+    )
+  }
+
+  getCategoryById(id: string): Observable<Category> {
+    return this.http.get<Category>(
+      this.baseURL + this.categoryEndpoints.getCategoryById.replace(':id', id)
     )
   }
 }

@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Category } from '../../shared/interfaces';
 import { CategoryDataApiService } from '../../shared/services/category-data-api.service';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -12,12 +13,17 @@ import { CommonModule } from '@angular/common';
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
-export class HomeComponent implements OnInit{
+export class HomeComponent implements OnInit {
   categories$ !: Observable<Category[]>;
 
-  constructor(private categoryDataApiService: CategoryDataApiService){}
+  constructor(private categoryDataApiService: CategoryDataApiService, private router: Router) { }
 
   ngOnInit(): void {
     this.categories$ = this.categoryDataApiService.getAllCategories();
+  }
+
+  goToProjectsForCategory(category: Category): void {
+    console.log(category);
+    this.router.navigate(['/projects/', category.id])
   }
 }
