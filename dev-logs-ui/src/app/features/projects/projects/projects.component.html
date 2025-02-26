@@ -1,15 +1,61 @@
+<p-toast></p-toast>
+<!-- <p-confirmpopup></p-confirmpopup> -->
+<p-confirmdialog></p-confirmdialog>
 
 <div class="flex align-items-center justify-content-between">
-    @if(category$ | async; as category) {
-        <h2>{{category.category}}</h2>
-    }
-    <p-button icon="pi pi-plus" [rounded]="true"/>
+  @if(category$ | async; as category) {
+  <h2>{{category.category}}</h2>
+  }
+  <p-button icon="pi pi-plus" [rounded]="true" (click)="showAddProjectDialog()" />
 </div>
 
-@for (project of projects$ | async; track project.title) {
-    <div class="col-12">
-      <p-card header="{{project.title}}" ></p-card>
+@for (project of projects$ | async; track project) {
+<div class="col-4">
+
+  <p-card>
+    <div class="flex align-items-center justify-content-between">
+      <p>{{project.title}}</p>
+      <p-button (click)="deleteProjectPopup(project)" icon="pi pi-trash" severity="danger" [raised]="true" />
     </div>
-    } @empty {
-    <div>There are no projects.</div>
-    }
+  </p-card>
+</div>
+} @empty {
+<div>There are no projects.</div>
+}
+
+<p-dialog header="Add Project" [modal]="true" [(visible)]="displayAddProjectDialog" [style]="{ width: '25rem' }"
+  (onHide)="hideAddProjectDialog()">
+  <form [formGroup]="addProjectForm">
+
+    <div class="flex flex-column mb-2">
+      <label for="title" class="font-semibold w-24">Title</label>
+      <input pInputText id="title" class="flex-auto" autocomplete="off" formControlName="title" />
+      <div *ngIf="
+            addProjectForm.controls['title'].invalid &&
+              (addProjectForm.controls['title'].dirty ||
+              addProjectForm.controls['title'].touched)
+            " class="alert" [style]="{ color: 'red' }">
+        <small *ngIf="addProjectForm.controls['title'].errors?.['required']" class="p-error block mt-2">
+          Title is required
+        </small>
+      </div>
+    </div>
+    <div class="flex flex-column mb-3">
+      <label for="description" class="font-semibold w-24">Description</label>
+      <input pInputText id="description" class="flex-auto" autocomplete="off" formControlName="description" />
+      <div *ngIf="
+            addProjectForm.controls['description'].invalid &&
+              (addProjectForm.controls['description'].dirty ||
+              addProjectForm.controls['description'].touched)
+            " class="alert" [style]="{ color: 'red' }">
+        <small *ngIf="addProjectForm.controls['description'].errors?.['required']" class="p-error block mt-2">
+          Description is required
+        </small>
+      </div>
+    </div>
+    <div class="flex justify-end gap-2">
+      <p-button label="Add" (click)="createProject()" />
+      <p-button label="Cancel" severity="secondary" (click)="hideAddProjectDialog()" />
+    </div>
+  </form>
+</p-dialog>

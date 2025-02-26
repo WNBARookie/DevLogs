@@ -7,6 +7,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeng/themes/aura';
 import { provideHttpClient, withFetch } from '@angular/common/http';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -22,6 +23,8 @@ export const appConfig: ApplicationConfig = {
         },
       },
     }),
-    provideHttpClient(withFetch())
+    provideHttpClient(withFetch()),
+    MessageService,
+    ConfirmationService
   ],
 };

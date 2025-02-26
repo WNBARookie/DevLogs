@@ -23,7 +23,6 @@ export class HomeComponent implements OnInit {
   }
 
   goToProjectsForCategory(category: Category): void {
-    console.log(category);
     this.router.navigate(['/projects/', category.id])
   }
 }
