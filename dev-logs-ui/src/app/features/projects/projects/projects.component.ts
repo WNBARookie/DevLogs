@@ -8,9 +8,9 @@ import {
   Category,
   Project,
 } from '../../../shared/interfaces';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CategoryDataApiService } from '../../../shared/services/category-data-api.service';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { MessagesService } from '../../../shared/services/messages.service';
 import { ConfirmationService } from 'primeng/api';
 import { ProjectFormComponent } from '../project-form/project-form.component';
@@ -40,7 +40,8 @@ export class ProjectsComponent implements OnInit {
     private categoryDataApiService: CategoryDataApiService,
     private route: ActivatedRoute,
     private messagesService: MessagesService,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -62,7 +63,7 @@ export class ProjectsComponent implements OnInit {
     this.displayProjectDialog = value;
   }
 
-  refreshDataFromDialog(value: any) {
+  refreshData(value: any) {
     if (value) {
       this.projects$ = this.projectDataApiService.getAllProjectsForCategory(
         this.categoryId
@@ -75,9 +76,10 @@ export class ProjectsComponent implements OnInit {
       (res: ApiResponseMessage) => {
         if (res.status === 200) {
           this.messagesService.showSuccess(res.summary, res.details);
-          this.projects$ = this.projectDataApiService.getAllProjectsForCategory(
-            this.categoryId
-          );
+          this.refreshData(true);
+          // this.projects$ = this.projectDataApiService.getAllProjectsForCategory(
+          //   this.categoryId
+          // );
         }
       },
       (err) => {
@@ -108,5 +110,10 @@ export class ProjectsComponent implements OnInit {
       },
       reject: () => {},
     });
+  }
+
+  goToProjectDetails(project: Project): void {
+    console.log(project);
+    this.router.navigate(['/projects/details', project.id]);
   }
 }

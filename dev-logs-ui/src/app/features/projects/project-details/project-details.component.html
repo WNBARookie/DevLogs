@@ -1,0 +1,79 @@
+<p-toast></p-toast>
+<p-confirmdialog></p-confirmdialog>
+
+<div class="flex align-items-center justify-content-between">
+    @if(project$ | async; as project) {
+    <h2>{{ project.title }}</h2>
+    }
+    <div class="flex">
+        <p-button icon="pi pi-plus" [rounded]="true" (click)="showItemDialog(null)" class="mr-3" />
+        <p-button icon="pi pi-lightbulb" [rounded]="true" [text]="true" severity="warn" (click)="generateSummary()" />
+    </div>
+</div>
+
+
+@if(summaryGenerated){
+<!-- <h3>Summary of project:</h3>
+<p>{{summary}}</p> -->
+
+<p-card [style]="{ backgroundColor: 'rgba(0,0,0,0.1)' }">
+    <!-- <ng-template #header>
+        <img alt="Card" class="w-full" src="https://primefaces.org/cdn/primeng/images/card-ng.jpg" />
+    </ng-template> -->
+    <ng-template #title> Summary of project:</ng-template>
+    <!-- <ng-template #subtitle> Card subtitle </ng-template> -->
+    <div class="flex align-items-center gap-2">
+        <p-button icon="pi pi-lightbulb" [rounded]="true" [text]="true" severity="warn" size="large" />
+
+        <p>{{summary}}</p>
+    </div>
+    <!-- <ng-template #footer>
+        <div class="flex gap-4 mt-1">
+            <p-button label="Cancel" severity="secondary" class="w-full" [outlined]="true" styleClass="w-full" />
+            <p-button label="Save" class="w-full" styleClass="w-full" />
+        </div>
+    </ng-template> -->
+</p-card>
+}
+
+
+<p-accordion [multiple]="true">
+    @for (item of items$ | async; track item; let idx = $index) {
+    <p-accordion-panel [value]=" idx">
+        <p-accordion-header>
+            <div class="flex align-items-center">
+                <span>{{ item.title }}</span>
+                <p-menu #menu [model]="menuItems" [popup]="true" appendTo="body" />
+                <p-button (click)="toggleMenu(menu, $event, item); $event.stopPropagation()" icon="pi pi-ellipsis-v"
+                    [text]="true" severity="secondary" />
+            </div>
+        </p-accordion-header>
+        <p-accordion-content>
+            <div class="">
+                <small class="font-semibold">Description:</small>
+                <p>{{item.description}}</p>
+                <!-- <p-divider /> -->
+
+                <small class="font-semibold">Skills Applied:</small>
+                <p>{{item.skillsApplied}}</p>
+                <!-- <p-divider /> -->
+
+                <small class="font-semibold">Lessons Learned:</small>
+                <p>{{item.lessonsLearned}}</p>
+                <!-- <p-divider /> -->
+
+                <small class="font-semibold">Date Completed:</small>
+                <p>{{item.dateCompleted | date : "LL-dd-yyyy" }}</p>
+
+            </div>
+        </p-accordion-content>
+    </p-accordion-panel>
+    } @empty {
+    <div>There are no items.</div>
+    }
+</p-accordion>
+
+
+<app-item-form *ngIf="displayItemDialog" [currentItem]="currentItem" [displayItemDialog]="displayItemDialog"
+    (itemDialogStatus)="showItemDialogToggle($event)" (refreshData)="refreshData($event)" [projectId]="projectId">
+</app-item-form>

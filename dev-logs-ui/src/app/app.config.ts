@@ -25,6 +25,6 @@ export const appConfig: ApplicationConfig = {
     }),
     provideHttpClient(withFetch()),
     MessageService,
-    ConfirmationService
+    ConfirmationService,
   ],
 };

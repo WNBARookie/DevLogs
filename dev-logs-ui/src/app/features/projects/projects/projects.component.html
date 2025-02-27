@@ -12,7 +12,7 @@
 <div class="col-12">
   <p-card>
     <div class="flex align-items-center justify-content-between">
-      <div class="">
+      <div class="" (click)="goToProjectDetails(project);">
         <h4>{{ project.title }}</h4>
         <p>{{project.description}}</p>
       </div>
@@ -31,5 +31,5 @@
 
 <app-project-form *ngIf="displayProjectDialog" [currentProject]="currentProject"
   [displayProjectDialog]="displayProjectDialog" (projectDialogStatus)="showProjectDialogToggle($event)"
-  (refreshData)="refreshDataFromDialog($event)" [categoryId]="categoryId">
+  (refreshData)="refreshData($event)" [categoryId]="categoryId">
 </app-project-form>
