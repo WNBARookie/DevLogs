@@ -5,7 +5,6 @@ import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { ToastModule } from 'primeng/toast';
-import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 
@@ -18,7 +17,6 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     DialogModule,
     InputTextModule,
     ToastModule,
-    ConfirmPopupModule,
     ConfirmDialogModule
   ],
   exports: [
@@ -27,7 +25,6 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     DialogModule,
     InputTextModule,
     ToastModule,
-    ConfirmPopupModule,
     ConfirmDialogModule
   ],
 })

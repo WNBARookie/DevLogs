@@ -1,0 +1,38 @@
+<p-toast></p-toast>
+
+<p-dialog header="{{dialogTitle}}" [modal]="true" [(visible)]="displayProjectDialog" [style]="{ width: '25rem' }"
+    (onHide)="hideProjectDialog()">
+    <form [formGroup]="projectForm">
+
+        <div class="flex flex-column mb-2">
+            <label for="title" class="font-semibold w-24">Title</label>
+            <input pInputText id="title" class="flex-auto" autocomplete="off" formControlName="title" />
+            <div *ngIf="
+            projectForm.controls['title'].invalid &&
+              (projectForm.controls['title'].dirty ||
+              projectForm.controls['title'].touched)
+            " class="alert" [style]="{ color: 'red' }">
+                <small *ngIf="projectForm.controls['title'].errors?.['required']" class="p-error block mt-2">
+                    Title is required
+                </small>
+            </div>
+        </div>
+        <div class="flex flex-column mb-3">
+            <label for="description" class="font-semibold w-24">Description</label>
+            <input pInputText id="description" class="flex-auto" autocomplete="off" formControlName="description" />
+            <div *ngIf="
+            projectForm.controls['description'].invalid &&
+              (projectForm.controls['description'].dirty ||
+              projectForm.controls['description'].touched)
+            " class="alert" [style]="{ color: 'red' }">
+                <small *ngIf="projectForm.controls['description'].errors?.['required']" class="p-error block mt-2">
+                    Description is required
+                </small>
+            </div>
+        </div>
+        <div class="flex justify-end gap-2">
+            <p-button label="{{actionButtonTitle}}" (click)="onSubmitProject()" />
+            <p-button label="Cancel" severity="secondary" (click)="hideProjectDialog()" />
+        </div>
+    </form>
+</p-dialog>

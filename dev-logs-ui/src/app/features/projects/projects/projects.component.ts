@@ -3,108 +3,92 @@ import { Component, OnInit } from '@angular/core';
 import { PrimeNGModule } from '../../../shared/modules/primeng/primeng.module';
 import { ProjectDataApiService } from '../../../shared/services/project-data-api.service';
 import { Observable } from 'rxjs';
-import { ApiResponseMessage, Category, Project } from '../../../shared/interfaces';
+import {
+  ApiResponseMessage,
+  Category,
+  Project,
+} from '../../../shared/interfaces';
 import { ActivatedRoute } from '@angular/router';
 import { CategoryDataApiService } from '../../../shared/services/category-data-api.service';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { MessagesService } from '../../../shared/services/messages.service';
 import { ConfirmationService } from 'primeng/api';
+import { ProjectFormComponent } from '../project-form/project-form.component';
 
 @Component({
   selector: 'app-projects',
   standalone: true,
-  imports: [PrimeNGModule, CommonModule, ReactiveFormsModule],
+  imports: [
+    PrimeNGModule,
+    CommonModule,
+    ReactiveFormsModule,
+    ProjectFormComponent,
+  ],
   templateUrl: './projects.component.html',
-  styleUrl: './projects.component.scss'
+  styleUrl: './projects.component.scss',
 })
 export class ProjectsComponent implements OnInit {
-
-  category$ !: Observable<Category>;
-  projects$ !: Observable<Project[]>;
+  category$!: Observable<Category>;
+  projects$!: Observable<Project[]>;
   categoryId!: string;
 
-  displayAddProjectDialog: boolean = false;
-  addProjectForm !: FormGroup
-
+  displayProjectDialog: boolean = false;
+  currentProject!: Project;
 
   constructor(
     public projectDataApiService: ProjectDataApiService,
     private categoryDataApiService: CategoryDataApiService,
     private route: ActivatedRoute,
-    private fb: FormBuilder,
     private messagesService: MessagesService,
     private confirmationService: ConfirmationService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
-    this.addProjectForm = this.fb.group({
-      title: ['', [Validators.required]],
-      description: ['', [Validators.required]],
-      categoryId: ['', []],
-    });
-
-    this.categoryId = this.route.snapshot.paramMap.get("id") || '';
-    this.category$ = this.categoryDataApiService.getCategoryById(this.categoryId)
-    this.projects$ = this.projectDataApiService.getAllProjectsForCategory(this.categoryId);
+    this.categoryId = this.route.snapshot.paramMap.get('id') || '';
+    this.category$ = this.categoryDataApiService.getCategoryById(
+      this.categoryId
+    );
+    this.projects$ = this.projectDataApiService.getAllProjectsForCategory(
+      this.categoryId
+    );
   }
 
-  showAddProjectDialog(): void {
-    this.displayAddProjectDialog = true;
+  showProjectDialog(project: any): void {
+    this.displayProjectDialog = true;
+    this.currentProject = project;
   }
 
-  hideAddProjectDialog(): void {
-    this.displayAddProjectDialog = false;
-
-    this.addProjectForm = this.fb.group({
-      title: ['', [Validators.required]],
-      description: ['', [Validators.required]],
-      categoryId: ['', []],
-    });
+  showProjectDialogToggle(value: any) {
+    this.displayProjectDialog = value;
   }
 
-
-  createProject(): void {
-    this.addProjectForm.patchValue({
-      categoryId: this.categoryId
-    })
-
-    this.projectDataApiService.createProject(this.addProjectForm.getRawValue())
-      .subscribe(
-        (res: ApiResponseMessage) => {
-          if (res.status === 200) {
-            this.messagesService.showSuccess(res.summary, res.details);
-            this.hideAddProjectDialog();
-            this.projects$ = this.projectDataApiService.getAllProjectsForCategory(this.categoryId);
-          }
-        },
-        (err) => {
-          this.messagesService.showError(err.error.summary, err.error.details);
-        }
+  refreshDataFromDialog(value: any) {
+    if (value) {
+      this.projects$ = this.projectDataApiService.getAllProjectsForCategory(
+        this.categoryId
       );
+    }
   }
 
   deleteProject(project: Project): void {
-    console.log(project)
-    this.projectDataApiService.deleteProjectById(project.id)
-      .subscribe(
-        (res: ApiResponseMessage) => {
-          if (res.status === 200) {
-            this.messagesService.showSuccess(res.summary, res.details);
-            this.hideAddProjectDialog();
-            this.projects$ = this.projectDataApiService.getAllProjectsForCategory(this.categoryId);
-          }
-        },
-        (err) => {
-          this.messagesService.showError(err.error.summary, err.error.details);
+    this.projectDataApiService.deleteProjectById(project.id).subscribe(
+      (res: ApiResponseMessage) => {
+        if (res.status === 200) {
+          this.messagesService.showSuccess(res.summary, res.details);
+          this.projects$ = this.projectDataApiService.getAllProjectsForCategory(
+            this.categoryId
+          );
         }
-      );
+      },
+      (err) => {
+        this.messagesService.showError(err.error.summary, err.error.details);
+      }
+    );
   }
 
   deleteProjectPopup(project: Project): void {
-    console.log(project)
     this.confirmationService.confirm({
       header: 'Delete',
-      // position: 'bottom',
       message: 'Are you sure you want to delete?',
       icon: 'pi pi-exclamation-circle',
       rejectButtonProps: {
@@ -117,12 +101,12 @@ export class ProjectsComponent implements OnInit {
         label: 'Delete',
         icon: 'pi pi-check',
         size: 'small',
-        severity: 'danger'
+        severity: 'danger',
       },
       accept: () => {
-        this.deleteProject(project)
+        this.deleteProject(project);
       },
-      reject: () => { }
+      reject: () => {},
     });
   }
 }
