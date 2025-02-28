@@ -1,7 +1,7 @@
 <p-toast></p-toast>
 <p-confirmdialog></p-confirmdialog>
 
-<div class="flex align-items-center justify-content-between">
+<div class="flex align-items-center justify-content-between px-4">
   @if(category$ | async; as category) {
   <h2>{{ category.category }}</h2>
   }
@@ -9,8 +9,8 @@
 </div>
 
 @for (project of projects$ | async; track project) {
-<div class="col-12">
-  <p-card>
+<div class="px-4 mb-4">
+  <p-card [style]="{ backgroundColor: 'rgba(0,0,0,0.1)' }">
     <div class="flex align-items-center justify-content-between">
       <div class="" (click)="goToProjectDetails(project);">
         <h4>{{ project.title }}</h4>
@@ -20,7 +20,7 @@
         <p-button icon="pi pi-pencil" severity="secondary" [rounded]="true" [outlined]="true" class="mr-3"
           (click)="showProjectDialog(project)" />
         <p-button (click)="deleteProjectPopup(project)" icon="pi pi-trash" severity="danger" [rounded]="true"
-          [outlined]="true" />
+          [text]="true" />
       </div>
     </div>
   </p-card>

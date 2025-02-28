@@ -1,7 +1,7 @@
 <p-toast></p-toast>
 
 <p-dialog header="{{dialogTitle}}" [modal]="true" [(visible)]="displayItemDialog" [style]="{ width: '40rem' }"
-    (onHide)="hideItemDialog()">
+    (onHide)="hideItemDialog()" [draggable]="false">
     <form [formGroup]="itemForm">
 
         <!-- Title -->

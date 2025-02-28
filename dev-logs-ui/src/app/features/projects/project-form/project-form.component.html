@@ -1,7 +1,7 @@
 <p-toast></p-toast>
 
 <p-dialog header="{{dialogTitle}}" [modal]="true" [(visible)]="displayProjectDialog" [style]="{ width: '40rem' }"
-    (onHide)="hideProjectDialog()">
+    (onHide)="hideProjectDialog()" [draggable]="false">
     <form [formGroup]="projectForm">
 
         <div class="flex flex-column mb-2">
