@@ -25,9 +25,11 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+app.use('/api/areas', require('./routes/areaRoutes'));
 app.use('/api/categories', require('./routes/categoryRoutes'));
 app.use('/api/projects', require('./routes/projectRoutes'));
 app.use('/api/items', require('./routes/itemRoutes'));
+app.use('/api/users', require('./routes/userRoutes'));
 
 app.use(responseHandler);
 

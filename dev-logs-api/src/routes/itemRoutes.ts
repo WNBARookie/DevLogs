@@ -1,15 +1,24 @@
 import express from 'express';
-import { createItem, deleteItem, getAllItemsForProject, getItemById, updateItem } from '../controllers';
+import { protect } from '../middlewares';
+import { createItem, getItems, getItemDetails, updateItem, deleteItem } from '../controllers';
 
 const router = express.Router();
 
-router.get('/:id', getAllItemsForProject);
-router.get('/item/:id', getItemById);
+/*
 
-router.post('/', createItem);
+    create item for category
+    get all items for an category
+    get item details by id 
+    update item
+    delete item
+    generate item summary
 
-router.put('/', updateItem);
+*/
 
-router.delete('/:id', deleteItem);
+router.post('/', protect, createItem);
+router.get('/', protect, getItems);
+router.get('/:id', protect, getItemDetails);
+router.put('/:id', protect, updateItem);
+router.delete('/:id', protect, deleteItem);
 
 module.exports = router;

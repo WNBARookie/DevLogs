@@ -1,4 +1,6 @@
 export interface Category {
-    id: string;
-    category: string;
+  id: string;
+  title: string;
+  description: string;
+  projectId: string;
 }

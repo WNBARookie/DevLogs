@@ -1,14 +1,24 @@
 import { model, Schema, Types } from 'mongoose';
 
 interface Category {
-  category: string;
+  title: string;
+  description: string;
+  projectId: Types.ObjectId;
 }
 
 const categorySchema = new Schema<Category>(
   {
-    category: {
+    title: {
       type: String,
-      required: [true, 'Please add a category'],
+      required: [true, 'Please add a title'],
+    },
+    description: {
+      type: String,
+      required: [true, 'Please add a description'],
+    },
+    projectId: {
+      type: Schema.Types.ObjectId,
+      required: true,
     },
   },
   {
