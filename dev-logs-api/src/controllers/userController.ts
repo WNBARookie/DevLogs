@@ -1,55 +1,32 @@
-import bcrypt from 'bcryptjs';
 import asyncHandler from 'express-async-handler';
-import jwt from 'jsonwebtoken';
-import { UserModel } from '../models/userModel';
-
 import { MessageConstants } from '../constants';
-import { User } from '../interfaces';
-import { ApiResponse } from '../utils';
-import { convertUser } from '../services';
+import { AuthenticateUserRequestBody, CreateUserRequestBody, User } from '../interfaces';
+import { handleBadRequest, handleGoodRequest, isInvalidRequestBody } from '../utils';
+import { userExists, authenticateUserHelper, getFormattedUserById } from '../services';
+import { createUser } from '../repositories';
 
 // @desc    Register new user
 // @route   POST /api/users/register
 // @access  Public
 export const registerUser = asyncHandler(async (req, res, next) => {
-  const { username, email, password, name } = req.body;
-  if (!username || !email || !password || !name) {
-    next(ApiResponse.badRequest(MessageConstants.errorMessages.missingInformation, MessageConstants.errorMessages.addAllFields, 400, req.originalUrl));
-    return;
+  const requestBody = req.body as CreateUserRequestBody;
+  if (isInvalidRequestBody(requestBody, ['username', 'email', 'password', 'name'])) {
+    return handleBadRequest(next, MessageConstants.errorMessages.missingInformation, MessageConstants.errorMessages.addAllFields, req.originalUrl);
   }
 
-  //   check if user exists
-  const userExistsEmail = await UserModel.findOne({ email });
-  const userExistsUsername = await UserModel.findOne({ username });
+  const { username, email } = requestBody;
 
-  if (userExistsEmail) {
-    next(ApiResponse.badRequest(MessageConstants.errorMessages.userExists, MessageConstants.errorMessages.userExistsEmail, 400, req.originalUrl));
-    return;
+  const userAlreadyExists = await userExists(email, username);
+  if (userAlreadyExists) {
+    return handleBadRequest(next, MessageConstants.errorMessages.userExists, MessageConstants.errorMessages.userExists, req.originalUrl);
   }
 
-  if (userExistsUsername) {
-    next(ApiResponse.badRequest(MessageConstants.errorMessages.userExists, MessageConstants.errorMessages.userExistsUsername, 400, req.originalUrl));
-    return;
-  }
-
-  //   hash password
-  const salt = await bcrypt.genSalt(10);
-  const hashedPassword = await bcrypt.hash(password, salt);
-
-  //   create user
-  const user = await UserModel.create({
-    username,
-    email,
-    password: hashedPassword,
-    name,
-  });
+  const user = await createUser(requestBody);
 
   if (user) {
-    next(ApiResponse.goodRequest(MessageConstants.successMessages.successfullyCreated, MessageConstants.successMessages.userSuccessfullyCreated, 200, req.originalUrl));
-    return;
+    return handleGoodRequest(next, MessageConstants.successMessages.successfullyCreated, MessageConstants.successMessages.userSuccessfullyCreated, req.originalUrl);
   } else {
-    next(ApiResponse.badRequest(MessageConstants.errorMessages.unableToCreate, MessageConstants.errorMessages.userNotCreated, 400, req.originalUrl));
-    return;
+    return handleBadRequest(next, MessageConstants.errorMessages.unableToCreate, MessageConstants.errorMessages.userNotCreated, req.originalUrl);
   }
 });
 
@@ -57,25 +34,14 @@ export const registerUser = asyncHandler(async (req, res, next) => {
 // @route   POST /api/users/login
 // @access  Public
 export const authenticateUser = asyncHandler(async (req, res, next) => {
-  const { email, password } = req.body;
+  const requestBody = req.body as AuthenticateUserRequestBody;
 
-  //   check for user email
-  const user = await UserModel.findOne({ email: new RegExp(`^${email}$`, 'i') });
+  const token = await authenticateUserHelper(requestBody);
 
-  if (user && user.password && (await bcrypt.compare(password, user.password))) {
-    next(
-      ApiResponse.goodRequest(
-        MessageConstants.successMessages.successfullyLoggedIn,
-        MessageConstants.successMessages.userSuccessfullyLoggedIn,
-        200,
-        req.originalUrl,
-        generateToken(user._id.toString())
-      )
-    );
-    return;
+  if (token) {
+    return handleGoodRequest(next, MessageConstants.successMessages.successfullyLoggedIn, MessageConstants.successMessages.userSuccessfullyLoggedIn, req.originalUrl, token);
   } else {
-    next(ApiResponse.badRequest(MessageConstants.errorMessages.invalidCredentials, MessageConstants.errorMessages.invalidCredentialsDetails, 400, req.originalUrl));
-    return;
+    return handleBadRequest(next, MessageConstants.errorMessages.invalidCredentials, MessageConstants.errorMessages.invalidCredentialsDetails, req.originalUrl);
   }
 });
 
@@ -83,19 +49,6 @@ export const authenticateUser = asyncHandler(async (req, res, next) => {
 // @route   GET /api/users/me
 // @access  Private
 export const getMe = asyncHandler(async (req: any, res) => {
-  let user = await UserModel.findById(req.user.id);
-  let convertedUser = convertUser(user);
-
-  let userData: User = {
-    id: convertedUser.id,
-    username: convertedUser.username,
-    email: convertedUser.email,
-    name: convertedUser.name,
-  };
-  res.status(200).json(userData);
+  const user = await getFormattedUserById(req.user.id);
+  res.status(200).json(user);
 });
-
-// generate JWT
-const generateToken = (id: string) => {
-  return jwt.sign({ id }, process.env.JWT_SECRET as jwt.Secret, { expiresIn: '30d' });
-};
