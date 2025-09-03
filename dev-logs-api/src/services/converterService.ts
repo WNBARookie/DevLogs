@@ -1,4 +1,4 @@
-import { User, UserInfo } from '../interfaces';
+import { Area, AreaInfo, User, UserInfo } from '../interfaces';
 
 // convert user model into user object
 export const convertUser = (user: User): UserInfo => {
@@ -10,4 +10,15 @@ export const convertUser = (user: User): UserInfo => {
   };
 
   return convertedUser;
+};
+
+// convert area model into area object
+export const convertArea = (area: Area): AreaInfo => {
+  let convertedArea: AreaInfo = {
+    id: area._id.toString(),
+    title: area.title,
+    description: area.description,
+  };
+
+  return convertedArea;
 };

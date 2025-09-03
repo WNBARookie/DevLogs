@@ -6,15 +6,11 @@ import { UserModel } from '../models';
 import { getUserByEmail, getUserById } from '../repositories';
 
 // Utility function to check if user exists
-export const userExists = async (email: any, username: any): Promise<boolean> => {
-  const userExistsEmail = await UserModel.findOne({ email });
+export const userExists = async (email: string, username: string): Promise<boolean> => {
+  const userExistsEmail = await getUserByEmail(email);
   const userExistsUsername = await UserModel.findOne({ username });
 
-  if (userExistsEmail || userExistsUsername) {
-    return true;
-  }
-
-  return false;
+  return userExistsEmail || userExistsUsername ? true : false;
 };
 
 //authenticate user
@@ -31,13 +27,9 @@ export const authenticateUserHelper = async (requestBody: AuthenticateUserReques
 
 //get user by id
 export const getFormattedUserById = async (id: string): Promise<UserInfo> => {
-  try {
-    const user = await getUserById(id);
-    return convertUser(user as User) ?? ({} as User);
-  } catch (err) {
-    console.error(err);
-    return {} as User;
-  }
+  const user = await getUserById(id);
+
+  return convertUser(user as User) ?? ({} as User);
 };
 
 // generate JWT

@@ -3,8 +3,10 @@ export interface ErrorMessages {
   somethingWentWrong: string;
   missingInformation: string;
   itemNotFound: string;
+  notFound: string;
   unableToCreate: string;
   userExists: string;
+  areaExists: string;
   notAuthorized: string;
   invalidCredentials: string;
   notAuthorizedNoToken: string;
@@ -15,6 +17,7 @@ export interface ErrorMessages {
   addDescription: string;
   addTitle: string;
   projectNotFound: string;
+  areaNotFound: string;
   addCategoryId: string;
   addProjectId: string;
   addItemId: string;
@@ -26,6 +29,7 @@ export interface ErrorMessages {
   addDateCompleted: string;
   itemNotCreated: string;
   itemAlreadyExists: string;
+  areaAlreadyExists: string;
   userNotCreated: string;
   notAuthorizedNoTokenDetails: string;
   userExistsEmail: string;

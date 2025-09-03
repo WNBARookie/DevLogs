@@ -1,21 +1,18 @@
 import supertest from 'supertest';
 import app from '../../src/server';
 import { userExists } from '../../src/services/userService';
-import { createUser } from '../../src/repositories/userRepository';
+import { mongoCreateUser } from '../../src/repositories/userRepository';
 import * as userRepository from '../../src/repositories/userRepository';
+
+//request bodies
+import validRegisterUserRequestBody from '../resources/json/requests/validRegisterUserRequest.json';
+import invalidRegisterUserRequestBody from '../resources/json/requests/invalidRegisterUserRequest.json';
+import validAuthenticateUserRequestBody from '../resources/json/requests/validAuthenticateUserRequest.json';
+import invalidAuthenticateUserRequestBody from '../resources/json/requests/invalidAuthenticateUserRequest.json';
 
 describe('User', () => {
   describe('Register User', () => {
-    let validRegisterUserRequestBody = {
-      username: 'testUser',
-      email: 'testUser@Test.com',
-      password: '123456',
-      name: 'Test User',
-    };
-
     it('should return 200 if user is successfully created', async () => {
-      //ARRANGE
-
       //ACT
       await supertest(app).post('/api/users/register').send(validRegisterUserRequestBody).expect(200);
 
@@ -27,7 +24,7 @@ describe('User', () => {
 
     it('should return 400 if user already exists', async () => {
       //ARRANGE
-      await createUser(validRegisterUserRequestBody);
+      await mongoCreateUser(validRegisterUserRequestBody);
 
       //ACT
       await supertest(app).post('/api/users/register').send(validRegisterUserRequestBody).expect(400);
@@ -40,58 +37,30 @@ describe('User', () => {
 
     it('should return 400 if error happens when creating user', async () => {
       //ARRANGE
-      jest.spyOn(userRepository, 'createUser').mockResolvedValueOnce(null as any);
+      jest.spyOn(userRepository, 'mongoCreateUser').mockResolvedValueOnce(null as any);
 
       //ACT/ASSSERT
       await supertest(app).post('/api/users/register').send(validRegisterUserRequestBody).expect(400);
     });
 
     it('should return 400 if invalid request body', async () => {
-      //ARRANGE
-
-      //make request body
-      let invalidRegisterUserRequestBody = {
-        username: 'testUser',
-        email: 'testUser@Test.com',
-        password: '123456',
-      };
-
       //ACT/ASSSERT
       await supertest(app).post('/api/users/register').send(invalidRegisterUserRequestBody).expect(400);
     });
   });
 
   describe('Login User', () => {
-    let validRegisterUserRequestBody = {
-      username: 'testUser',
-      email: 'testUser@Test.com',
-      password: '123456',
-      name: 'Test User',
-    };
-
     it('should return 200 if user is successfully authenticated', async () => {
       //ARRANGE
-
-      await createUser(validRegisterUserRequestBody);
-
-      let validAuthenticateUserRequestBody = {
-        email: 'testUser@Test.com',
-        password: '123456',
-      };
+      await mongoCreateUser(validRegisterUserRequestBody);
 
       //ACT/ASSERT
       await supertest(app).post('/api/users/login').send(validAuthenticateUserRequestBody).expect(200);
     });
 
-    it('should return 400 if user  credentials are invalid', async () => {
+    it('should return 400 if user credentials are invalid', async () => {
       //ARRANGE
-
-      await createUser(validRegisterUserRequestBody);
-
-      let invalidAuthenticateUserRequestBody = {
-        email: 'testUser@Test.com',
-        password: 'abc',
-      };
+      await mongoCreateUser(validRegisterUserRequestBody);
 
       //ACT/ASSERT
       await supertest(app).post('/api/users/login').send(invalidAuthenticateUserRequestBody).expect(400);
@@ -99,23 +68,9 @@ describe('User', () => {
   });
 
   describe('Get user data', () => {
-    let validRegisterUserRequestBody = {
-      username: 'testUser',
-      email: 'testUser@Test.com',
-      password: '123456',
-      name: 'Test User',
-    };
-
     it('should return 200 if user data is successfully fetched', async () => {
       //ARRANGE
-
-      await createUser(validRegisterUserRequestBody);
-
-      let validAuthenticateUserRequestBody = {
-        email: 'testUser@Test.com',
-        password: '123456',
-      };
-
+      await mongoCreateUser(validRegisterUserRequestBody);
       const login = await supertest(app).post('/api/users/login').send(validAuthenticateUserRequestBody).expect(200);
       const token = login.body.token;
 
@@ -128,10 +83,6 @@ describe('User', () => {
 
     it('should return 401 if user  credentials are invalid', async () => {
       //ARRANGE
-      let validAuthenticateUserRequestBody = {
-        email: 'testUser@Test.com',
-        password: '123456',
-      };
       const token = 'invalid';
 
       //ACT

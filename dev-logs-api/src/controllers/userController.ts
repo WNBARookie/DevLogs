@@ -3,7 +3,7 @@ import { MessageConstants } from '../constants';
 import { AuthenticateUserRequestBody, CreateUserRequestBody, User } from '../interfaces';
 import { handleBadRequest, handleGoodRequest, isInvalidRequestBody } from '../utils';
 import { userExists, authenticateUserHelper, getFormattedUserById } from '../services';
-import { createUser } from '../repositories';
+import { mongoCreateUser } from '../repositories';
 
 // @desc    Register new user
 // @route   POST /api/users/register
@@ -21,7 +21,7 @@ export const registerUser = asyncHandler(async (req, res, next) => {
     return handleBadRequest(next, MessageConstants.errorMessages.userExists, MessageConstants.errorMessages.userExists, req.originalUrl);
   }
 
-  const user = await createUser(requestBody);
+  const user = await mongoCreateUser(requestBody);
 
   if (user) {
     return handleGoodRequest(next, MessageConstants.successMessages.successfullyCreated, MessageConstants.successMessages.userSuccessfullyCreated, req.originalUrl);

@@ -18,7 +18,7 @@ const router = express.Router();
 router.post('/', protect, createArea);
 router.get('/', protect, getAreas);
 router.get('/:id', protect, getAreaDetails);
-router.put('/:id', protect, updateArea);
+router.put('/', protect, updateArea);
 router.delete('/:id', protect, deleteArea);
 router.get('/summary/:id', protect, getAreaSummary);
 

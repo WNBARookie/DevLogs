@@ -13,7 +13,7 @@ export const getUserById = async (id: string): Promise<User | null> => {
 };
 
 // create user
-export const createUser = async (requestBody: CreateUserRequestBody): Promise<User> => {
+export const mongoCreateUser = async (requestBody: CreateUserRequestBody): Promise<User> => {
   const { username, email, password, name } = requestBody;
 
   // Hash password
