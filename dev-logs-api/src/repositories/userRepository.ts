@@ -7,7 +7,7 @@ export const getUserByEmail = async (email: string): Promise<User | null> => {
   return await UserModel.findOne({ email: new RegExp(`^${email}$`, 'i') });
 };
 
-// get user by email
+// get user by id
 export const getUserById = async (id: string): Promise<User | null> => {
   return await UserModel.findById(id);
 };
