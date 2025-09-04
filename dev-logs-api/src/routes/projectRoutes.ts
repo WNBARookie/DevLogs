@@ -18,7 +18,7 @@ const router = express.Router();
 router.post('/', protect, createProject);
 router.get('/', protect, getProjects);
 router.get('/:id', protect, getProjectDetails);
-router.put('/:id', protect, updateProject);
+router.put('/', protect, updateProject);
 router.delete('/:id', protect, deleteProject);
 router.get('/summary/:id', protect, getProjectSummary);
 

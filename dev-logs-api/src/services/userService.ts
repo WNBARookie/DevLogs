@@ -2,13 +2,12 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { convertUser } from '.';
 import { AuthenticateUserRequestBody, User, UserInfo } from '../interfaces';
-import { UserModel } from '../models';
-import { getUserByEmail, getUserById } from '../repositories';
+import { getUserByEmail, getUserById, getUserByUsername } from '../repositories';
 
 // Utility function to check if user exists
 export const userExists = async (email: string, username: string): Promise<boolean> => {
   const userExistsEmail = await getUserByEmail(email);
-  const userExistsUsername = await UserModel.findOne({ username });
+  const userExistsUsername = await getUserByUsername(username);
 
   return userExistsEmail || userExistsUsername ? true : false;
 };

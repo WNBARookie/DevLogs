@@ -5,10 +5,10 @@ import { mongoCreateUser } from '../../src/repositories/userRepository';
 import * as userRepository from '../../src/repositories/userRepository';
 
 //request bodies
-import validRegisterUserRequestBody from '../resources/json/requests/validRegisterUserRequest.json';
-import invalidRegisterUserRequestBody from '../resources/json/requests/invalidRegisterUserRequest.json';
-import validAuthenticateUserRequestBody from '../resources/json/requests/validAuthenticateUserRequest.json';
-import invalidAuthenticateUserRequestBody from '../resources/json/requests/invalidAuthenticateUserRequest.json';
+import validRegisterUserRequestBody from '../resources/json/requests/registerUserRequest_valid.json';
+import invalidRegisterUserRequestBody from '../resources/json/requests/registerUserRequest_invalid.json';
+import validAuthenticateUserRequestBody from '../resources/json/requests/authenticateUserRequest_valid.json';
+import invalidAuthenticateUserRequestBody from '../resources/json/requests/authenticateUserRequest_invalid.json';
 
 describe('User', () => {
   describe('Register User', () => {

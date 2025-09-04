@@ -42,21 +42,30 @@ export const getAreas = asyncHandler(async (req: any, res, next) => {
   const userId = req.user.id;
 
   const areas = (await getAreasForUser(userId)).map((area) => convertArea(area));
+
   res.status(200).json(areas);
 });
 
 // @desc    Update area
 // @route   PUT /api/areas
 // @access  Public
-export const updateArea = asyncHandler(async (req, res, next) => {
+export const updateArea = asyncHandler(async (req: any, res, next) => {
   //validate request body
   const requestBody = req.body as UpdateAreaRequestBody;
+  const userId = req.user.id;
 
   if (isInvalidRequestBody(requestBody, ['title', 'description', 'id'])) {
     return handleBadRequest(next, MessageConstants.errorMessages.missingInformation, MessageConstants.errorMessages.addAllFields, req.originalUrl);
   }
 
-  //find existing area
+  const { title, description } = requestBody;
+
+  const areaAlreadyExists = await areaExists(userId, title, description);
+  if (areaAlreadyExists) {
+    return handleBadRequest(next, MessageConstants.errorMessages.areaExists, MessageConstants.errorMessages.areaAlreadyExists, req.originalUrl);
+  }
+
+  //find and update existing area
   const area = await mongoUpdateArea(requestBody);
 
   //update area

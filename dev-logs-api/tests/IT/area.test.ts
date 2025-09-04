@@ -4,12 +4,12 @@ import app from '../../src/server';
 import * as areaRepository from '../../src/repositories/areaRepository';
 
 //request bodies
-import validRegisterUserRequestBody from '../resources/json/requests/validRegisterUserRequest.json';
-import validAuthenticateUserRequestBody from '../resources/json/requests/validAuthenticateUserRequest.json';
-import validCreateAreaRequestBody from '../resources/json/requests/validCreateAreaRequest.json';
-import invalidCreateAreaRequestBody from '../resources/json/requests/invalidCreateAreaRequest.json';
-import validUpdateAreaRequestBody from '../resources/json/requests/validUpdateAreaRequest.json';
-import invalidUpdateAreaRequestBody from '../resources/json/requests/invalidUpdateAreaRequest.json';
+import validRegisterUserRequestBody from '../resources/json/requests/registerUserRequest_valid.json';
+import validAuthenticateUserRequestBody from '../resources/json/requests/authenticateUserRequest_valid.json';
+import validCreateAreaRequestBody from '../resources/json/requests/createAreaRequest_valid.json';
+import invalidCreateAreaRequestBody from '../resources/json/requests/createAreaRequest_invalid.json';
+import validUpdateAreaRequestBody from '../resources/json/requests/updateAreaRequest_valid.json';
+import invalidUpdateAreaRequestBody from '../resources/json/requests/updateAreaRequest_invalid.json';
 
 describe('Area', () => {
   let token: string;
@@ -56,7 +56,7 @@ describe('Area', () => {
       await supertest(app).post('/api/areas').send(validCreateAreaRequestBody).set('Authorization', `Bearer ${token}`).expect(200);
 
       //ACT/ASSERT
-      const areas = await supertest(app).get('/api/areas').send(validCreateAreaRequestBody).set('Authorization', `Bearer ${token}`).expect(200);
+      const areas = await supertest(app).get('/api/areas').set('Authorization', `Bearer ${token}`).expect(200);
       expect(areas.body.length).toBe(1);
     });
   });
@@ -66,7 +66,7 @@ describe('Area', () => {
       //ARRANGE
       await supertest(app).post('/api/areas').send(validCreateAreaRequestBody).set('Authorization', `Bearer ${token}`).expect(200);
 
-      const areas = await supertest(app).get('/api/areas').send(validCreateAreaRequestBody).set('Authorization', `Bearer ${token}`).expect(200);
+      const areas = await supertest(app).get('/api/areas').set('Authorization', `Bearer ${token}`).expect(200);
 
       validUpdateAreaRequestBody.id = areas.body[0].id;
 
@@ -89,11 +89,11 @@ describe('Area', () => {
   });
 
   describe('Delete Area', () => {
-    it('should return 200 if an area is successfully update', async () => {
+    it('should return 200 if an area is successfully deleted', async () => {
       //ARRANGE
       await supertest(app).post('/api/areas').send(validCreateAreaRequestBody).set('Authorization', `Bearer ${token}`).expect(200);
 
-      const areas = await supertest(app).get('/api/areas').send(validCreateAreaRequestBody).set('Authorization', `Bearer ${token}`).expect(200);
+      const areas = await supertest(app).get('/api/areas').set('Authorization', `Bearer ${token}`).expect(200);
 
       const id = areas.body[0].id;
 
@@ -112,7 +112,7 @@ describe('Area', () => {
       jest.spyOn(areaRepository, 'deleteAreaById').mockResolvedValueOnce(null as any);
 
       //ACT/ASSSERT
-      await supertest(app).delete(`/api/areas/${id}`).send(validUpdateAreaRequestBody).set('Authorization', `Bearer ${token}`).expect(400);
+      await supertest(app).delete(`/api/areas/${id}`).set('Authorization', `Bearer ${token}`).expect(400);
     });
 
     it('should return 400 if area does not exist', async () => {

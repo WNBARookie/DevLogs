@@ -15,12 +15,12 @@ export const mongoCreateArea = async (requestBody: CreateAreaRequestBody): Promi
 };
 
 // get areas for user
-export const getAreasForUser = async (id: Types.ObjectId): Promise<Area[]> => {
-  return await AreaModel.find({ userId: id });
+export const getAreasForUser = async (userId: Types.ObjectId): Promise<Area[]> => {
+  return await AreaModel.find({ userId });
 };
 
 // get area by id
-export const getAreaById = async (id: string): Promise<Area | null> => {
+export const getAreaById = async (id: string | Types.ObjectId): Promise<Area | null> => {
   return await AreaModel.findById(id);
 };
 

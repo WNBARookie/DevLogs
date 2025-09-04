@@ -1,10 +1,5 @@
-import { model, Schema, Types } from 'mongoose';
-
-interface Project {
-  title: string;
-  description: string;
-  areaId: Types.ObjectId;
-}
+import { model, Schema } from 'mongoose';
+import { Project } from '../interfaces';
 
 const projectSchema = new Schema<Project>(
   {
@@ -19,6 +14,12 @@ const projectSchema = new Schema<Project>(
     areaId: {
       type: Schema.Types.ObjectId,
       required: true,
+      ref: 'Area',
+    },
+    userId: {
+      type: Schema.Types.ObjectId,
+      required: true,
+      ref: 'User',
     },
   },
   {

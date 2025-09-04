@@ -7,6 +7,7 @@ export interface ErrorMessages {
   unableToCreate: string;
   userExists: string;
   areaExists: string;
+  projectExists: string;
   notAuthorized: string;
   invalidCredentials: string;
   notAuthorizedNoToken: string;
