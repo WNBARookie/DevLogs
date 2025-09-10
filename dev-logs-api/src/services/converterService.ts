@@ -6,7 +6,6 @@ export const convertUser = (user: User): UserInfo => {
     id: user._id.toString(),
     username: user.username,
     email: user.email,
-    name: user.name,
   };
 
   return convertedUser;

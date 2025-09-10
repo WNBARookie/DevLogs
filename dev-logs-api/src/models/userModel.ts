@@ -17,10 +17,6 @@ const userSchema = new Schema<User>(
       type: String,
       required: false,
     },
-    name: {
-      type: String,
-      required: [true, 'Please add a name'],
-    },
   },
   {
     timestamps: true,

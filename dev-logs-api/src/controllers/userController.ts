@@ -10,7 +10,7 @@ import { mongoCreateUser } from '../repositories';
 // @access  Public
 export const registerUser = asyncHandler(async (req, res, next) => {
   const requestBody = req.body as CreateUserRequestBody;
-  if (isInvalidRequestBody(requestBody, ['username', 'email', 'password', 'name'])) {
+  if (isInvalidRequestBody(requestBody, ['username', 'email', 'password'])) {
     return handleBadRequest(next, MessageConstants.errorMessages.missingInformation, MessageConstants.errorMessages.addAllFields, req.originalUrl);
   }
 

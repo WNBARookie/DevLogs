@@ -19,7 +19,7 @@ export const getUserById = async (id: string): Promise<User | null> => {
 
 // create user
 export const mongoCreateUser = async (requestBody: CreateUserRequestBody): Promise<User> => {
-  const { username, email, password, name } = requestBody;
+  const { username, email, password } = requestBody;
 
   // Hash password
   const salt = bcrypt.genSaltSync(10);
@@ -30,6 +30,5 @@ export const mongoCreateUser = async (requestBody: CreateUserRequestBody): Promi
     username,
     email,
     password: hashedPassword,
-    name,
   });
 };
