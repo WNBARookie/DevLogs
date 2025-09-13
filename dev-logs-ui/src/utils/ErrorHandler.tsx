@@ -8,11 +8,11 @@ export const handleError = (error: any) => {
 
     if (Array.isArray(err?.data.errors)) {
       for (const val of err.data.errors) {
-        toast.warning(val.description);
+        toast.error(val.description);
       }
     } else if (typeof err?.data.errors === 'object') {
       for (const e of err.data.errors) {
-        toast.warning(err.data.errors[e][0]);
+        toast.error(err.data.errors[e][0]);
       }
     } else if (err?.data) {
       const response = err.data as ApiResponse;
@@ -22,7 +22,8 @@ export const handleError = (error: any) => {
       toast.error(response.details);
       window.history.pushState({}, 'LoginPage', '/login');
     } else if (err) {
-      toast.warning(err?.data);
+      console.error(err);
+      toast.warning('Server error occured.');
     }
   }
 };
