@@ -1,5 +1,6 @@
 export * from './User';
 export * from './ApiResponse';
+export * from './Area';
 
 // endpoint interfaces
 export * from './ApiEndpoints';

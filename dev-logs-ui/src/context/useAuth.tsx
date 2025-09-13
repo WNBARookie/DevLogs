@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from 'react';
-import type { AuthenticateUserRequestBody, CreateUserRequestBody, UserInfo } from '../types';
+import type { AuthenticateUserRequestBody, CreateUserRequestBody } from '../types';
 import { useNavigate } from 'react-router-dom';
 import { loginAPI, registerAPI } from '../services/AuthService';
 import { toast } from 'react-toastify';
@@ -33,7 +33,7 @@ export const UserProvider = ({ children }: UserContextProps) => {
     }
 
     setIsReady(true);
-  }, []);
+  }, [isReady]);
 
   const registerUser = async (requestBody: CreateUserRequestBody) => {
     await registerAPI(requestBody)
@@ -58,6 +58,7 @@ export const UserProvider = ({ children }: UserContextProps) => {
           localStorage.setItem('token', res.data.token);
           setToken(res.data.token);
           toast.success(res.data.details);
+          setIsReady(false);
           navigate('/');
         }
       })

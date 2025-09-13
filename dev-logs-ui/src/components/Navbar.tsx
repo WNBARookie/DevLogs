@@ -4,7 +4,7 @@ const Navbar = () => {
   const { isLoggedIn, logout } = useAuth();
 
   return isLoggedIn() ? (
-    <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-900">
+    <div className="flex items-center justify-between px-12 py-4 bg-gray-50 dark:bg-gray-900">
       <h1 className="text-xl font-bold text-gray-900 dark:text-white">DevLogs</h1>
 
       <button
