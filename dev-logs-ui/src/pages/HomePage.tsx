@@ -4,6 +4,7 @@ import type { AreaInfo } from '../types';
 import Spinner from '../components/Spinner';
 import AreaList from '../components/AreaList';
 import { FaPlus } from 'react-icons/fa';
+
 import AreaFormModal from '../components/AreaFormModal';
 
 const HomePage = () => {
@@ -45,7 +46,7 @@ const HomePage = () => {
   };
 
   return (
-    <div className="h-screen px-12 py-4">
+    <div className="px-12 py-4">
       <div className="flex items-center justify-between mb-6">
         {' '}
         <h1 className="text-4xl font-bold">Welcome</h1>

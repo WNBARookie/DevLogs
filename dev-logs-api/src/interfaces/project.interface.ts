@@ -18,7 +18,7 @@ export interface ProjectInfo {
 export interface CreateProjectRequestBody {
   title: string;
   description: string;
-  areaId: Types.ObjectId;
+  areaId: string | Types.ObjectId;
   userId: Types.ObjectId;
 }
 

@@ -1,3 +1,5 @@
+import type { ProjectInfo } from './Project';
+
 export type AreaInfo = {
   id: string;
   title: string;
@@ -13,4 +15,8 @@ export type UpdateAreaRequestBody = {
   id: string;
   title: string;
   description: string;
+};
+export type AreaDetails = {
+  area: AreaInfo;
+  projects: ProjectInfo[];
 };

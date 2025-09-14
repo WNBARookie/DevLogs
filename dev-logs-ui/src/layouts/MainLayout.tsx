@@ -6,12 +6,12 @@ import { UserProvider } from '../context/useAuth';
 
 export const MainLayout = () => {
   return (
-    <>
+    <div className="bg-gray-100 min-h-screen">
       <UserProvider>
         <Navbar />
         <Outlet />
         <ToastContainer />
       </UserProvider>
-    </>
+    </div>
   );
 };

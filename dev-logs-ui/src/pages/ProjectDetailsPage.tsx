@@ -1,5 +1,9 @@
+import { useParams } from 'react-router-dom';
+
 const ProjectDetailsPage = () => {
-  return <div>ProjectDetailsPage</div>;
+  const { id } = useParams();
+
+  return <div className="h-full">ProjectDetailsPage</div>;
 };
 
 export default ProjectDetailsPage;

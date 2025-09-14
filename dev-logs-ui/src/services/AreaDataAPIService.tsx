@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { EndpointsConfig } from '../config/endpoints.config';
-import type { ApiResponse, AreaInfo, CreateAreaRequestBody, UpdateAreaRequestBody } from '../types';
+import type { ApiResponse, AreaDetails, AreaInfo, CreateAreaRequestBody, UpdateAreaRequestBody } from '../types';
 import { handleError } from '../utils/ErrorHandler';
 
 export const getAreasAPI = async () => {
@@ -10,6 +10,17 @@ export const getAreasAPI = async () => {
     return data;
   } catch (error) {
     console.error('Error fetching areas:', error);
+    handleError(error);
+  }
+};
+
+export const getAreaDetailsAPI = async (id: string) => {
+  try {
+    const data = await axios.get<AreaDetails>(EndpointsConfig.areaData.getAreaDetails.replace(':id', id));
+
+    return data;
+  } catch (error) {
+    console.error('Error fetching area details:', error);
     handleError(error);
   }
 };

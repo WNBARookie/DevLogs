@@ -25,6 +25,11 @@ export const getProjectsForUser = async (userId: Types.ObjectId): Promise<Projec
   return await ProjectModel.find({ userId });
 };
 
+// get projects for user by area
+export const getProjectsForUserByArea = async (userId: Types.ObjectId, areaId: string | Types.ObjectId): Promise<Project[]> => {
+  return await ProjectModel.find({ userId, areaId });
+};
+
 // get project by id
 export const getProjectById = async (id: string | Types.ObjectId): Promise<Project | null> => {
   return await ProjectModel.findById(id);

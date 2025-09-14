@@ -1,7 +1,7 @@
 import { MessageConstants } from '../constants';
-import { CreateAreaRequestBody, UpdateAreaRequestBody } from '../interfaces';
-import { deleteAreaById, getAreaById, getAreasForUser, mongoCreateArea, mongoUpdateArea } from '../repositories';
-import { areaExists, convertArea } from '../services';
+import { AreaDetails, CreateAreaRequestBody, UpdateAreaRequestBody } from '../interfaces';
+import { deleteAreaById, getAreaById, getAreasForUser, getProjectByAreaIdAndUserId, getProjectsForUserByArea, mongoCreateArea, mongoUpdateArea } from '../repositories';
+import { areaExists, convertArea, convertProject } from '../services';
 import { ApiResponse, handleBadRequest, handleGoodRequest, isInvalidRequestBody } from '../utils';
 import asyncHandler from 'express-async-handler';
 
@@ -102,8 +102,27 @@ export const deleteArea = asyncHandler(async (req, res, next) => {
 // @desc    Get area detais by id and all projects for it
 // @route   GET /api/areas/:id
 // @access  Public
-export const getAreaDetails = asyncHandler(async (req, res, next) => {
-  next(ApiResponse.goodRequest('Not implemented', 'This get areas details endpoint is not implemented yet.', 200, req.originalUrl));
+export const getAreaDetails = asyncHandler(async (req: any, res, next) => {
+  const areaId = req.params.id;
+  const userId = req.user.id;
+
+  //find area
+  const area = await getAreaById(areaId);
+
+  if (!area) {
+    return handleBadRequest(next, MessageConstants.errorMessages.notFound, MessageConstants.errorMessages.areaNotFound, req.originalUrl);
+  }
+
+  // get projects for area
+  const projectsForArea = (await getProjectsForUserByArea(userId, areaId)).map((project) => convertProject(project));
+
+  // create response
+  const areaDetails: AreaDetails = {
+    area: convertArea(area),
+    projects: projectsForArea,
+  };
+
+  res.status(200).json(areaDetails);
 });
 
 // @desc    Generate area summary

@@ -1,4 +1,5 @@
 import { Types } from 'mongoose';
+import { ProjectInfo } from './project.interface';
 
 export interface Area {
   _id?: any; //TODO: fix type
@@ -24,4 +25,9 @@ export interface UpdateAreaRequestBody {
   id: string;
   title: string;
   description: string;
+}
+
+export interface AreaDetails {
+  area: AreaInfo;
+  projects: ProjectInfo[];
 }

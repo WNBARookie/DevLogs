@@ -1,20 +1,21 @@
-import { useEffect, useState } from 'react';
-import type { AreaInfo, CreateAreaRequestBody, UpdateAreaRequestBody } from '../types';
-import { createArea, updateArea } from '../services/AreaService';
-import { FaTimes } from 'react-icons/fa';
-import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import { createProject, updateProject } from '../services/ProjectService';
+import type { CreateProjectRequestBody, ProjectInfo, UpdateProjectRequestBody } from '../types';
+import * as Yup from 'yup';
+import { FaTimes } from 'react-icons/fa';
 
-type AreaFormModalProps = {
+type ProjectFormModalProps = {
   open: boolean;
   onClose: () => void;
   onSuccess: () => void;
-  area: AreaInfo | null;
+  project: ProjectInfo | null;
+  areaId: string;
 };
 
-function AreaFormModal({ open, onClose, onSuccess, area }: AreaFormModalProps) {
-  const [isAddingArea, setIsAddingArea] = useState(true);
+const ProjectFormModal = ({ open, onClose, onSuccess, project, areaId }: ProjectFormModalProps) => {
+  const [isAddingProject, setIsAddingProject] = useState(true);
 
   const validation = Yup.object().shape({
     title: Yup.string().required('Title is required'),
@@ -26,17 +27,18 @@ function AreaFormModal({ open, onClose, onSuccess, area }: AreaFormModalProps) {
     handleSubmit,
     reset,
     formState: { errors, touchedFields },
-  } = useForm<CreateAreaRequestBody>({ resolver: yupResolver(validation), defaultValues: { title: '', description: '' } });
+  } = useForm<CreateProjectRequestBody>({ resolver: yupResolver(validation), defaultValues: { title: '', description: '' } });
 
-  const handleCreateArea = async (form: CreateAreaRequestBody) => {
+  const handleCreateProject = async (form: CreateProjectRequestBody) => {
     let res;
+    form.areaId = areaId;
 
-    if (area) {
-      const updateForm = form as UpdateAreaRequestBody;
-      updateForm.id = area.id;
-      res = await updateArea(updateForm);
+    if (project) {
+      const updateForm = form as UpdateProjectRequestBody;
+      updateForm.id = project.id;
+      res = await updateProject(updateForm);
     } else {
-      res = await createArea(form);
+      res = await createProject(form);
     }
 
     if (res && res.status === 200) {
@@ -62,24 +64,24 @@ function AreaFormModal({ open, onClose, onSuccess, area }: AreaFormModalProps) {
   };
 
   useEffect(() => {
-    setIsAddingArea(area ? false : true);
+    setIsAddingProject(project ? false : true);
 
-    if (area) {
-      reset({ title: area.title, description: area.description });
+    if (project) {
+      reset({ title: project.title, description: project.description });
     } else {
       reset({ title: '', description: '' });
       clearForm();
     }
-  }, [area]);
+  }, [project]);
 
   return (
     <dialog open={open} className="modal">
       <div className="modal-box bg-gray-100 relative rounded-lg">
         <FaTimes className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" onClick={handleCloseDialog} />
 
-        <h2 className="font-bold text-3xl text-center mt-4 mb-8">{isAddingArea ? 'Add Area' : 'Edit Area'}</h2>
+        <h2 className="font-bold text-3xl text-center mt-4 mb-8">{isAddingProject ? 'Add Project' : 'Edit Project'}</h2>
 
-        <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit(handleCreateArea)}>
+        <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit(handleCreateProject)}>
           <div>
             <label htmlFor="title" className="block mb-2 text-sm font-medium text-gray-900">
               Title
@@ -117,7 +119,7 @@ function AreaFormModal({ open, onClose, onSuccess, area }: AreaFormModalProps) {
                          focus:ring-4 focus:outline-none focus:ring-primary-300 
                          font-medium rounded-lg text-sm px-5 py-2.5 text-center"
             >
-              {isAddingArea ? 'Add' : 'Edit'}
+              {isAddingProject ? 'Add' : 'Edit'}
             </button>
             <button
               type="button"
@@ -133,6 +135,6 @@ function AreaFormModal({ open, onClose, onSuccess, area }: AreaFormModalProps) {
       </div>
     </dialog>
   );
-}
+};
 
-export default AreaFormModal;
+export default ProjectFormModal;

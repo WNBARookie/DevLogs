@@ -7,14 +7,16 @@ import ProjectDetailsPage from '../pages/ProjectDetailsPage';
 import ProjectsPage from '../pages/ProjectsPage';
 import SignupPage from '../pages/SignupPage';
 import ProtectedRoute from './ProtectedRoute';
+import LandingPage from '../pages/LandingPage';
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<MainLayout />}>
+      <Route index element={<LandingPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/signup" element={<SignupPage />} />
       <Route
-        index
+        path="/home"
         element={
           <ProtectedRoute>
             <HomePage />
@@ -22,7 +24,7 @@ export const router = createBrowserRouter(
         }
       />
       <Route
-        path="/projects"
+        path="/areas/:id"
         element={
           <ProtectedRoute>
             <ProjectsPage />

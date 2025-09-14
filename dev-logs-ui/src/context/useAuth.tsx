@@ -59,7 +59,7 @@ export const UserProvider = ({ children }: UserContextProps) => {
           setToken(res.data.token);
           toast.success(res.data.details);
           setIsReady(false);
-          navigate('/');
+          navigate('/home');
         }
       })
       .catch((e) => {
@@ -73,9 +73,10 @@ export const UserProvider = ({ children }: UserContextProps) => {
   };
 
   const logout = () => {
+    console.log('logout');
     localStorage.removeItem('token');
     setToken('');
-    navigate('/login');
+    navigate('/');
   };
 
   return <UserContext.Provider value={{ loginUser, token, logout, isLoggedIn, registerUser }}>{isReady ? children : null}</UserContext.Provider>;

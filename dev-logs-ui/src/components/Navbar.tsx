@@ -1,20 +1,37 @@
 import { useAuth } from '../context/useAuth';
+import { Link, useLocation } from 'react-router-dom';
 
 const Navbar = () => {
   const { isLoggedIn, logout } = useAuth();
 
-  return isLoggedIn() ? (
-    <div className="flex items-center justify-between px-12 py-4 bg-gray-50 dark:bg-gray-900">
-      <h1 className="text-xl font-bold text-gray-900 dark:text-white">DevLogs</h1>
+  const location = useLocation();
+  const currentPath = location.pathname;
 
-      <button
-        onClick={logout}
-        className="text-white bg-blue-500 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-      >
-        Logout
-      </button>
-    </div>
-  ) : null;
+  return (
+    <>
+      {currentPath !== '/' ? (
+        <div className="flex items-center justify-between px-12 py-4 bg-gray-900 text-white w-full">
+          <Link to="/home">
+            <h1 className="text-xl font-bold text-white">DevLogs</h1>
+          </Link>
+
+          {isLoggedIn() ? (
+            <div className="flex items-center">
+              <button onClick={logout} className="bg-blue-500 rounded-lg px-6 py-2 text-center">
+                Logout
+              </button>
+            </div>
+          ) : // <div className="flex items-center gap-6">
+          //   <Link to="/login">Login</Link>
+          //   <Link to="/signup" className="bg-blue-500 rounded-lg px-6 py-2 text-center">
+          //     Sign Up
+          //   </Link>
+          // </div>
+          null}
+        </div>
+      ) : null}
+    </>
+  );
 };
 
 export default Navbar;
