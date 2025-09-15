@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { EndpointsConfig } from '../config/endpoints.config';
-import type { ApiResponse, CreateProjectRequestBody, UpdateProjectRequestBody } from '../types';
+import type { ApiResponse, CreateProjectRequestBody, ProjectDetails, UpdateProjectRequestBody } from '../types';
 import { handleError } from '../utils/ErrorHandler';
 
 export const createProjectAPI = async (requestBody: CreateProjectRequestBody) => {
@@ -9,6 +9,17 @@ export const createProjectAPI = async (requestBody: CreateProjectRequestBody) =>
 
     return data;
   } catch (error) {
+    handleError(error);
+  }
+};
+
+export const getProjectDetailsAPI = async (id: string) => {
+  try {
+    const data = await axios.get<ProjectDetails>(EndpointsConfig.projectData.getProjectDetails.replace(':id', id));
+
+    return data;
+  } catch (error) {
+    console.error('Error fetching project details:', error);
     handleError(error);
   }
 };

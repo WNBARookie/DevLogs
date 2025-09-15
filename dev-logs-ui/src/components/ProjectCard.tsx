@@ -1,4 +1,3 @@
-import React from 'react';
 import { FaEllipsisV, FaChevronRight } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { deleteProject } from '../services/ProjectService';
@@ -21,7 +20,6 @@ const ProjectCard = ({ project, onSuccess, onShowModal }: ProjectCardProps) => {
   };
 
   const handleProjectClick = () => {
-    //TODO: make this add the id to the url
     navigate(`/projects/${project.id}`);
   };
 

@@ -4,7 +4,7 @@ import { getAreaDetails } from '../services/AreaService';
 import { useState, useEffect } from 'react';
 import ProjectFormModal from '../components/ProjectFormModal';
 import ProjectList from '../components/ProjectList';
-import { FaPlus } from 'react-icons/fa';
+import { FaLightbulb, FaPlus } from 'react-icons/fa';
 import Spinner from '../components/Spinner';
 
 const ProjectsPage = () => {
@@ -51,12 +51,19 @@ const ProjectsPage = () => {
     setShowModal(true);
   };
 
+  const handleGenerateSummary = () => {
+    console.log('Generate summary for projects in an area');
+  };
+
   return (
     <div className="px-12 py-4">
       <div className="flex items-center justify-between mb-6">
         {' '}
         <h1 className="text-4xl font-bold">Projects for {area?.title}</h1>
-        <FaPlus className="text-2xl btn btn-sm btn-circle btn-ghost" onClick={() => onShowModal(null)} />
+        <div className="flex items-center justify-between gap-8">
+          <FaLightbulb className="text-2xl btn btn-sm btn-circle btn-ghost text-amber-600" onClick={handleGenerateSummary} />
+          <FaPlus className="text-2xl btn btn-sm btn-circle btn-ghost" onClick={() => onShowModal(null)} />
+        </div>{' '}
       </div>
       {loading ? <Spinner loading={loading} /> : <ProjectList projects={projects} onSuccess={onSuccess} onShowModal={onShowModal} />}
 

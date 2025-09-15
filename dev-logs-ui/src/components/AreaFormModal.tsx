@@ -62,7 +62,7 @@ function AreaFormModal({ open, onClose, onSuccess, area }: AreaFormModalProps) {
   };
 
   useEffect(() => {
-    setIsAddingArea(area ? false : true);
+    setIsAddingArea(!area);
 
     if (area) {
       reset({ title: area.title, description: area.description });
@@ -75,9 +75,9 @@ function AreaFormModal({ open, onClose, onSuccess, area }: AreaFormModalProps) {
   return (
     <dialog open={open} className="modal">
       <div className="modal-box bg-gray-100 relative rounded-lg">
-        <FaTimes className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" onClick={handleCloseDialog} />
+        <FaTimes className="btn btn-sm btn-circle btn-ghost absolute right-4 top-4" onClick={handleCloseDialog} />
 
-        <h2 className="font-bold text-3xl text-center mt-4 mb-8">{isAddingArea ? 'Add Area' : 'Edit Area'}</h2>
+        <h2 className="font-bold text-3xl text-center my-2">{isAddingArea ? 'Add Area' : 'Edit Area'}</h2>
 
         <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit(handleCreateArea)}>
           <div>
@@ -113,7 +113,7 @@ function AreaFormModal({ open, onClose, onSuccess, area }: AreaFormModalProps) {
           <div className="flex items-center gap-4 mx-20">
             <button
               type="submit"
-              className="w-full text-white bg-blue-500 hover:bg-primary-700 
+              className="w-full text-white bg-blue-500 hover:bg-blue-700 
                          focus:ring-4 focus:outline-none focus:ring-primary-300 
                          font-medium rounded-lg text-sm px-5 py-2.5 text-center"
             >

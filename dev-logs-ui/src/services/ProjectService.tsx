@@ -1,6 +1,6 @@
 import { toast } from 'react-toastify';
-import type { ApiResponse, CreateProjectRequestBody, UpdateProjectRequestBody } from '../types';
-import { createProjectAPI, deleteProjectAPI, updateProjectAPI } from './ProjectDataAPIService';
+import type { ApiResponse, CreateProjectRequestBody, ProjectDetails, UpdateProjectRequestBody } from '../types';
+import { createProjectAPI, deleteProjectAPI, getProjectDetailsAPI, updateProjectAPI } from './ProjectDataAPIService';
 
 export const createProject = async (requestBody: CreateProjectRequestBody): Promise<ApiResponse | null> => {
   try {
@@ -12,6 +12,19 @@ export const createProject = async (requestBody: CreateProjectRequestBody): Prom
     return null;
   } catch (error) {
     console.error('Error creating project:', error);
+    return null;
+  }
+};
+
+export const getProjectDetails = async (id: string): Promise<ProjectDetails | null> => {
+  try {
+    const res = await getProjectDetailsAPI(id);
+    if (res && res.data) {
+      return res.data;
+    }
+    return null;
+  } catch (error) {
+    console.error('Error fetching project details:', error);
     return null;
   }
 };

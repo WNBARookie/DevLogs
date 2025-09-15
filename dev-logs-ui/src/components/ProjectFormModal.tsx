@@ -64,7 +64,7 @@ const ProjectFormModal = ({ open, onClose, onSuccess, project, areaId }: Project
   };
 
   useEffect(() => {
-    setIsAddingProject(project ? false : true);
+    setIsAddingProject(!project);
 
     if (project) {
       reset({ title: project.title, description: project.description });
@@ -77,9 +77,9 @@ const ProjectFormModal = ({ open, onClose, onSuccess, project, areaId }: Project
   return (
     <dialog open={open} className="modal">
       <div className="modal-box bg-gray-100 relative rounded-lg">
-        <FaTimes className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" onClick={handleCloseDialog} />
+        <FaTimes className="btn btn-sm btn-circle btn-ghost absolute right-4 top-4" onClick={handleCloseDialog} />
 
-        <h2 className="font-bold text-3xl text-center mt-4 mb-8">{isAddingProject ? 'Add Project' : 'Edit Project'}</h2>
+        <h2 className="font-bold text-3xl text-center my-2">{isAddingProject ? 'Add Project' : 'Edit Project'}</h2>
 
         <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit(handleCreateProject)}>
           <div>
@@ -115,7 +115,7 @@ const ProjectFormModal = ({ open, onClose, onSuccess, project, areaId }: Project
           <div className="flex items-center gap-4 mx-20">
             <button
               type="submit"
-              className="w-full text-white bg-blue-500 hover:bg-primary-700 
+              className="w-full text-white bg-blue-500 hover:bg-blue-700 
                          focus:ring-4 focus:outline-none focus:ring-primary-300 
                          font-medium rounded-lg text-sm px-5 py-2.5 text-center"
             >

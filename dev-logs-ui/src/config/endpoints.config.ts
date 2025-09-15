@@ -22,4 +22,10 @@ export const EndpointsConfig: ApiEndpoints = {
     deleteProject: '/api/projects/:id',
     getProjectSummary: '/api/projects/summary/:id',
   },
+  itemData: {
+    createItem: '/api/items',
+    getItems: '/api/items',
+    updateItem: '/api/items',
+    deleteItem: '/api/items/:id',
+  },
 };

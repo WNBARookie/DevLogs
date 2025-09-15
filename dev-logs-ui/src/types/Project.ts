@@ -1,3 +1,5 @@
+import type { ItemInfo } from './Item';
+
 export type ProjectInfo = {
   id: string;
   title: string;
@@ -15,3 +17,8 @@ export type UpdateProjectRequestBody = {
   title: string;
   description: string;
 };
+
+export interface ProjectDetails {
+  project: ProjectInfo;
+  items: ItemInfo[];
+}
