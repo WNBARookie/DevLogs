@@ -1,7 +1,7 @@
 import { MessageConstants } from '../constants';
-import { CreateProjectRequestBody, UpdateProjectRequestBody } from '../interfaces';
-import { deleteProjectById, getAreaById, getProjectById, getProjectsForUser, mongoCreateProject, mongoUpdateProject } from '../repositories';
-import { convertProject, projectExists } from '../services';
+import { CreateProjectRequestBody, ProjectDetails, UpdateProjectRequestBody } from '../interfaces';
+import { deleteProjectById, getAreaById, getItemsForUserProject, getProjectById, getProjectsForUser, mongoCreateProject, mongoUpdateProject } from '../repositories';
+import { convertItem, convertProject, projectExists } from '../services';
 import { ApiResponse, handleBadRequest, handleGoodRequest, isInvalidRequestBody } from '../utils';
 import asyncHandler from 'express-async-handler';
 
@@ -107,8 +107,27 @@ export const deleteProject = asyncHandler(async (req, res, next) => {
 // @desc    Get project detais by id and all projects for it
 // @route   GET /api/projects/:id
 // @access  Public
-export const getProjectDetails = asyncHandler(async (req, res, next) => {
-  next(ApiResponse.goodRequest('Not implemented', 'This get projects details endpoint is not implemented yet.', 200, req.originalUrl));
+export const getProjectDetails = asyncHandler(async (req: any, res, next) => {
+  const projectId = req.params.id;
+  const userId = req.user.id;
+
+  //find project
+  const project = await getProjectById(projectId);
+
+  if (!project) {
+    return handleBadRequest(next, MessageConstants.errorMessages.notFound, MessageConstants.errorMessages.projectNotFound, req.originalUrl);
+  }
+
+  // get items for project
+  const itemsForProject = (await getItemsForUserProject(userId, projectId)).map((item) => convertItem(item));
+
+  // create response
+  const projectDetails: ProjectDetails = {
+    project: convertProject(project),
+    items: itemsForProject,
+  };
+
+  res.status(200).json(projectDetails);
 });
 
 // @desc    Generate project summary

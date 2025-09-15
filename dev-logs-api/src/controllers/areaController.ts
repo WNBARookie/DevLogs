@@ -58,13 +58,6 @@ export const updateArea = asyncHandler(async (req: any, res, next) => {
     return handleBadRequest(next, MessageConstants.errorMessages.missingInformation, MessageConstants.errorMessages.addAllFields, req.originalUrl);
   }
 
-  const { title, description } = requestBody;
-
-  const areaAlreadyExists = await areaExists(userId, title, description);
-  if (areaAlreadyExists) {
-    return handleBadRequest(next, MessageConstants.errorMessages.areaExists, MessageConstants.errorMessages.areaAlreadyExists, req.originalUrl);
-  }
-
   //find and update existing area
   const area = await mongoUpdateArea(requestBody);
 

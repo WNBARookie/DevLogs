@@ -1,14 +1,5 @@
 import { model, Schema, Types } from 'mongoose';
-
-interface Item {
-  title: string;
-  description: string;
-  whatWentWell: string;
-  whatDidNotGoWell: string;
-  lessonsLearned: string;
-  dateCompleted: Date;
-  categoryId: Types.ObjectId;
-}
+import { Item } from '../interfaces';
 
 const itemSchema = new Schema<Item>(
   {
@@ -36,9 +27,14 @@ const itemSchema = new Schema<Item>(
       type: Date,
       required: [true, 'Please add a date completed'],
     },
-    categoryId: {
+    projectId: {
       type: Schema.Types.ObjectId,
       required: true,
+    },
+    userId: {
+      type: Schema.Types.ObjectId,
+      required: true,
+      ref: 'User',
     },
   },
   {

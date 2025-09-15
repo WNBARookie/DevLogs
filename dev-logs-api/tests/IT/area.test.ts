@@ -10,6 +10,7 @@ import validCreateAreaRequestBody from '../resources/json/requests/createAreaReq
 import invalidCreateAreaRequestBody from '../resources/json/requests/createAreaRequest_invalid.json';
 import validUpdateAreaRequestBody from '../resources/json/requests/updateAreaRequest_valid.json';
 import invalidUpdateAreaRequestBody from '../resources/json/requests/updateAreaRequest_invalid.json';
+import validCreateProjectRequestBody from '../resources/json/requests/createProjectRequest_valid.json';
 
 describe('Area', () => {
   let token: string;
@@ -125,12 +126,28 @@ describe('Area', () => {
   });
 
   describe('Get Area Details', () => {
-    it('should return 200 if an areas are successfully fetched', async () => {
+    it('should return 200 if an area details are successfully fetched', async () => {
       //ARRANGE
-      const id = 'placeholder';
+      await supertest(app).post('/api/areas').send(validCreateAreaRequestBody).set('Authorization', `Bearer ${token}`).expect(200);
+
+      const areas = await supertest(app).get('/api/areas').set('Authorization', `Bearer ${token}`).expect(200);
+      const id = areas.body[0].id;
+
+      //add project to area
+      validCreateProjectRequestBody.areaId = id;
+
+      await supertest(app).post('/api/projects').send(validCreateProjectRequestBody).set('Authorization', `Bearer ${token}`).expect(200);
 
       //ACT/ASSERT
       await supertest(app).get(`/api/areas/${id}`).send().set('Authorization', `Bearer ${token}`).expect(200);
+    });
+
+    it('should return 400 if an area does not exist', async () => {
+      //ARRANGE
+      const invalidAreaId = '68b871d8317decc56a9fe802';
+
+      //ACT/ASSERT
+      await supertest(app).get(`/api/areas/${invalidAreaId}`).send().set('Authorization', `Bearer ${token}`).expect(400);
     });
   });
 

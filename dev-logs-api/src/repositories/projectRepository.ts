@@ -16,7 +16,7 @@ export const mongoCreateProject = async (requestBody: CreateProjectRequestBody):
 };
 
 // get project by area id and user id
-export const getProjectByAreaIdAndUserId = async (title: string, description: string, areaId: Types.ObjectId, userId: Types.ObjectId): Promise<Project | null> => {
+export const getProjectByAreaIdAndUserId = async (title: string, description: string, areaId: Types.ObjectId | string, userId: Types.ObjectId): Promise<Project | null> => {
   return await ProjectModel.findOne({ title, description, areaId, userId });
 };
 
@@ -40,7 +40,7 @@ export const deleteProjectById = async (id: string): Promise<Project | null> => 
   return await ProjectModel.findByIdAndDelete(id);
 };
 
-// project area
+// update project
 export const mongoUpdateProject = async (requestBody: UpdateProjectRequestBody): Promise<Project | null> => {
   const { title, description, id } = requestBody;
 

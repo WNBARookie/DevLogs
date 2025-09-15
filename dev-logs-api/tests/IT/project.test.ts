@@ -12,11 +12,10 @@ import validCreateProjectRequestBody from '../resources/json/requests/createProj
 import invalidCreateProjectRequestBody from '../resources/json/requests/createProjectRequest_invalid.json';
 import validUpdateProjectRequestBody from '../resources/json/requests/updateProjectRequest_valid.json';
 import invalidUpdateProjectRequestBody from '../resources/json/requests/updateProjectRequest_invalid.json';
-import { CreateProjectRequestBody, Project } from '../../src/interfaces';
+import validCreateItemRequestBody from '../resources/json/requests/createItemRequest_valid.json';
 
 describe('Project', () => {
   let token: string;
-  //   let areaId: string;
 
   // Create user, log in before each test, and create area
   beforeEach(async () => {
@@ -27,7 +26,6 @@ describe('Project', () => {
 
     await supertest(app).post('/api/areas').send(validCreateAreaRequestBody).set('Authorization', `Bearer ${token}`).expect(200);
     const area = await AreaModel.findOne({});
-    // areaId = area?._id;
     validCreateProjectRequestBody.areaId = area?._id;
   });
 
@@ -45,7 +43,7 @@ describe('Project', () => {
       await supertest(app).post('/api/projects').send(validCreateProjectRequestBody).set('Authorization', `Bearer ${token}`).expect(400);
     });
 
-    it('should return 400 if error happens when creating area', async () => {
+    it('should return 400 if error happens when creating project', async () => {
       //ARRANGE
       jest.spyOn(projectRepository, 'mongoCreateProject').mockResolvedValueOnce(null as any);
 
@@ -116,7 +114,7 @@ describe('Project', () => {
   });
 
   describe('Delete Project', () => {
-    it('should return 200 if an area is successfully deleted', async () => {
+    it('should return 200 if a project is successfully deleted', async () => {
       //ARRANGE
       await supertest(app).post('/api/projects').send(validCreateProjectRequestBody).set('Authorization', `Bearer ${token}`).expect(200);
 
@@ -152,12 +150,28 @@ describe('Project', () => {
   });
 
   describe('Get Project Details', () => {
-    it('should return 200 if an projects are successfully fetched', async () => {
+    it('should return 200 if an project details are successfully fetched', async () => {
       //ARRANGE
-      const id = 'placeholder';
+      await supertest(app).post('/api/projects').send(validCreateProjectRequestBody).set('Authorization', `Bearer ${token}`).expect(200);
+
+      const projects = await supertest(app).get('/api/projects').set('Authorization', `Bearer ${token}`).expect(200);
+      const id = projects.body[0].id;
+
+      //add item to project
+      validCreateItemRequestBody.projectId = id;
+
+      await supertest(app).post('/api/items').send(validCreateItemRequestBody).set('Authorization', `Bearer ${token}`).expect(200);
 
       //ACT/ASSERT
       await supertest(app).get(`/api/projects/${id}`).send().set('Authorization', `Bearer ${token}`).expect(200);
+    });
+
+    it('should return 400 if a project does not exist', async () => {
+      //ARRANGE
+      const invalidProjectId = '68b871d8317decc56a9fe802';
+
+      //ACT/ASSERT
+      await supertest(app).get(`/api/projects/${invalidProjectId}`).send().set('Authorization', `Bearer ${token}`).expect(400);
     });
   });
 
