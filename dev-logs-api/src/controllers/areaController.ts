@@ -1,7 +1,8 @@
 import { MessageConstants } from '../constants';
-import { AreaDetails, CreateAreaRequestBody, UpdateAreaRequestBody } from '../interfaces';
+import { AreaDetails, AreaSummary, CreateAreaRequestBody, UpdateAreaRequestBody } from '../interfaces';
 import { deleteAreaById, getAreaById, getAreasForUser, getProjectByAreaIdAndUserId, getProjectsForUserByArea, mongoCreateArea, mongoUpdateArea } from '../repositories';
 import { areaExists, convertArea, convertProject } from '../services';
+import { generateSummary } from '../services/GeminiAIService';
 import { ApiResponse, handleBadRequest, handleGoodRequest, isInvalidRequestBody } from '../utils';
 import asyncHandler from 'express-async-handler';
 
@@ -121,6 +122,41 @@ export const getAreaDetails = asyncHandler(async (req: any, res, next) => {
 // @desc    Generate area summary
 // @route   GET /api/areas/summary/:id
 // @access  Public
-export const getAreaSummary = asyncHandler(async (req, res, next) => {
-  next(ApiResponse.goodRequest('Not implemented', 'This get area summary endpoint is not implemented yet.', 200, req.originalUrl));
+export const getAreaSummary = asyncHandler(async (req: any, res, next) => {
+  const areaId = req.params.id;
+  const userId = req.user.id;
+
+  //find area
+  const area = await getAreaById(areaId);
+
+  if (!area) {
+    return handleBadRequest(next, MessageConstants.errorMessages.notFound, MessageConstants.errorMessages.areaNotFound, req.originalUrl);
+  }
+
+  // get projects for area
+  const projectsForArea = (await getProjectsForUserByArea(userId, areaId)).map((project) => convertProject(project));
+
+  // format project list and make prompt
+  const formattedProjectList = projectsForArea.map((project, i) => `${i + 1}. ${project.title} - Description: ${project.description}`).join('\n');
+  const prompt = `
+  I have a list of projects , as well as the title and description for each project
+
+  ${formattedProjectList}
+
+  Please provide a concise summary of the all the projects. 
+
+  Make the summary and use full sentences, while also not mentioning that this is in full sentences.
+  `;
+
+  const areaSummary: AreaSummary = {
+    summary: '',
+  };
+
+  const summary = await generateSummary(prompt);
+
+  if (summary) {
+    areaSummary.summary = summary;
+  }
+
+  res.status(200).json(areaSummary);
 });

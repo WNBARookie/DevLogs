@@ -1,8 +1,7 @@
 import { Types } from 'mongoose';
 
 export interface User {
-  _id?: any; //TODO: fix type
-  //   id: string;
+  _id?: any;
   token?: string;
   username?: string;
   email: string;

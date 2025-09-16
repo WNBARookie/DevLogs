@@ -22,3 +22,7 @@ export interface ProjectDetails {
   project: ProjectInfo;
   items: ItemInfo[];
 }
+
+export interface ProjectSummary {
+  summary: string;
+}

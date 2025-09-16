@@ -17,7 +17,7 @@ const ItemCard = ({ item, onSuccess, onShowModal }: ItemCardProps) => {
 
   return (
     <div className="collapse collapse-arrow bg-gray-200 rounded shadow-lg">
-      <input type="radio" name="my-accordion-2" />
+      <input type="checkbox" name="my-accordion-2" />
       <div className="collapse-title font-semibold">{item.title}</div>
       <div className="collapse-content text-sm">
         <div className="">

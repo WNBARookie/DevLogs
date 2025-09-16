@@ -1,6 +1,6 @@
 import { toast } from 'react-toastify';
-import type { ApiResponse, AreaDetails, AreaInfo, CreateAreaRequestBody, UpdateAreaRequestBody } from '../types';
-import { createAreaAPI, deleteAreaAPI, getAreaDetailsAPI, getAreasAPI, updateAreaAPI } from './AreaDataAPIService';
+import type { ApiResponse, AreaDetails, AreaInfo, AreaSummary, CreateAreaRequestBody, UpdateAreaRequestBody } from '../types';
+import { createAreaAPI, deleteAreaAPI, getAreaDetailsAPI, getAreasAPI, getAreaSumamryAPI, updateAreaAPI } from './AreaDataAPIService';
 
 export const getAreas = async (): Promise<AreaInfo[] | null> => {
   try {
@@ -66,6 +66,19 @@ export const updateArea = async (requestBody: UpdateAreaRequestBody): Promise<Ap
     return null;
   } catch (error) {
     console.error('Error updating area:', error);
+    return null;
+  }
+};
+
+export const getAreaSummary = async (id: string): Promise<AreaSummary | null> => {
+  try {
+    const res = await getAreaSumamryAPI(id);
+    if (res && res.data) {
+      return res.data;
+    }
+    return null;
+  } catch (error) {
+    console.error('Error fetching area summary:', error);
     return null;
   }
 };

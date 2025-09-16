@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { EndpointsConfig } from '../config/endpoints.config';
-import type { ApiResponse, CreateProjectRequestBody, ProjectDetails, UpdateProjectRequestBody } from '../types';
+import type { ApiResponse, CreateProjectRequestBody, ProjectDetails, ProjectSummary, UpdateProjectRequestBody } from '../types';
 import { handleError } from '../utils/ErrorHandler';
 
 export const createProjectAPI = async (requestBody: CreateProjectRequestBody) => {
@@ -37,6 +37,16 @@ export const deleteProjectAPI = async (id: string) => {
 export const updateProjectAPI = async (requestBody: UpdateProjectRequestBody) => {
   try {
     const data = await axios.put<ApiResponse>(EndpointsConfig.projectData.updateProject, requestBody);
+
+    return data;
+  } catch (error) {
+    handleError(error);
+  }
+};
+
+export const getProjectSumamryAPI = async (id: string) => {
+  try {
+    const data = await axios.get<ProjectSummary>(EndpointsConfig.projectData.getProjectSummary.replace(':id', id));
 
     return data;
   } catch (error) {

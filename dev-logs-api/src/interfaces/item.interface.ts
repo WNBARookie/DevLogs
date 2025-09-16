@@ -1,7 +1,7 @@
 import { Types } from 'mongoose';
 
 export interface Item {
-  _id?: any; //TODO: fix type
+  _id?: any;
   title: string;
   description: string;
   whatWentWell: string;

@@ -16,7 +16,12 @@ export type UpdateAreaRequestBody = {
   title: string;
   description: string;
 };
+
 export type AreaDetails = {
   area: AreaInfo;
   projects: ProjectInfo[];
+};
+
+export type AreaSummary = {
+  summary: string;
 };

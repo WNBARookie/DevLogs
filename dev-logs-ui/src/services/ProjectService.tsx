@@ -1,6 +1,6 @@
 import { toast } from 'react-toastify';
-import type { ApiResponse, CreateProjectRequestBody, ProjectDetails, UpdateProjectRequestBody } from '../types';
-import { createProjectAPI, deleteProjectAPI, getProjectDetailsAPI, updateProjectAPI } from './ProjectDataAPIService';
+import type { ApiResponse, CreateProjectRequestBody, ProjectDetails, ProjectSummary, UpdateProjectRequestBody } from '../types';
+import { createProjectAPI, deleteProjectAPI, getProjectDetailsAPI, getProjectSumamryAPI, updateProjectAPI } from './ProjectDataAPIService';
 
 export const createProject = async (requestBody: CreateProjectRequestBody): Promise<ApiResponse | null> => {
   try {
@@ -53,6 +53,19 @@ export const updateProject = async (requestBody: UpdateProjectRequestBody): Prom
     return null;
   } catch (error) {
     console.error('Error updating project:', error);
+    return null;
+  }
+};
+
+export const getProjectSummary = async (id: string): Promise<ProjectSummary | null> => {
+  try {
+    const res = await getProjectSumamryAPI(id);
+    if (res && res.data) {
+      return res.data;
+    }
+    return null;
+  } catch (error) {
+    console.error('Error fetching project summary:', error);
     return null;
   }
 };

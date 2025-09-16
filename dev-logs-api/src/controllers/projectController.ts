@@ -1,7 +1,8 @@
 import { MessageConstants } from '../constants';
-import { CreateProjectRequestBody, ProjectDetails, UpdateProjectRequestBody } from '../interfaces';
+import { CreateProjectRequestBody, ProjectDetails, ProjectSummary, UpdateProjectRequestBody } from '../interfaces';
 import { deleteProjectById, getAreaById, getItemsForUserProject, getProjectById, getProjectsForUser, mongoCreateProject, mongoUpdateProject } from '../repositories';
 import { convertItem, convertProject, projectExists } from '../services';
+import { generateSummary } from '../services/GeminiAIService';
 import { ApiResponse, handleBadRequest, handleGoodRequest, isInvalidRequestBody } from '../utils';
 import asyncHandler from 'express-async-handler';
 
@@ -133,6 +134,49 @@ export const getProjectDetails = asyncHandler(async (req: any, res, next) => {
 // @desc    Generate project summary
 // @route   GET /api/projects/:id/summary
 // @access  Public
-export const getProjectSummary = asyncHandler(async (req, res, next) => {
-  next(ApiResponse.goodRequest('Not implemented', 'This get project summary endpoint is not implemented yet.', 200, req.originalUrl));
+export const getProjectSummary = asyncHandler(async (req: any, res, next) => {
+  const projectId = req.params.id;
+  const userId = req.user.id;
+
+  //find project
+  const project = await getProjectById(projectId);
+
+  if (!project) {
+    return handleBadRequest(next, MessageConstants.errorMessages.notFound, MessageConstants.errorMessages.projectNotFound, req.originalUrl);
+  }
+
+  // get items for project
+  const itemsForProject = (await getItemsForUserProject(userId, projectId)).map((item) => convertItem(item));
+
+  // format item list and make prompt
+  const formattedProjectList = itemsForProject
+    .map(
+      (item, i) =>
+        `${i + 1}. ${item.title} - Description: ${item.description} - What Went Well: ${item.whatWentWell} - What Did Not Go Well: ${item.whatDidNotGoWell} - Lessons Learned: ${
+          item.lessonsLearned
+        }`
+    )
+    .join('\n');
+
+  const prompt = `
+    I have a list of items , as well as the title, description, what went well, what did not go well, and lessons learned for each item
+  
+    ${formattedProjectList}
+  
+    Please provide a concise summary of the all the items. 
+  
+    Make the summary and use full sentences, while also not mentioning that this is in full sentences.
+    `;
+
+  const projectSummary: ProjectSummary = {
+    summary: '',
+  };
+
+  const summary = await generateSummary(prompt);
+
+  if (summary) {
+    projectSummary.summary = summary;
+  }
+
+  res.status(200).json(projectSummary);
 });

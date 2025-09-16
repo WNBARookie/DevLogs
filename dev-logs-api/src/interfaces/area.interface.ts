@@ -2,7 +2,7 @@ import { Types } from 'mongoose';
 import { ProjectInfo } from './project.interface';
 
 export interface Area {
-  _id?: any; //TODO: fix type
+  _id?: any;
   id: string;
   title: string;
   description: string;
@@ -30,4 +30,8 @@ export interface UpdateAreaRequestBody {
 export interface AreaDetails {
   area: AreaInfo;
   projects: ProjectInfo[];
+}
+
+export interface AreaSummary {
+  summary: string;
 }

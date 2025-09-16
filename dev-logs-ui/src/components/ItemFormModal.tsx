@@ -48,7 +48,6 @@ const ItemFormModal = ({ open, onClose, onSuccess, item, projectId }: ItemFormMo
     let res;
     form.projectId = projectId;
 
-    console.log(form);
     if (item) {
       const updateForm = form as UpdateItemRequestBody;
       updateForm.id = item.id;
