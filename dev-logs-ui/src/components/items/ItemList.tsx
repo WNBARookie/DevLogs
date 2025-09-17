@@ -1,4 +1,4 @@
-import type { ItemInfo } from '../types';
+import type { ItemInfo } from '../../types';
 import ItemCard from './ItemCard';
 
 type ItemListProps = {
@@ -9,7 +9,6 @@ type ItemListProps = {
 
 const ItemList = ({ items, onSuccess, onShowModal }: ItemListProps) => {
   return items && items.length > 0 ? (
-    // <div className="grid grid-cols-3 gap-8">
     <div className="grid gap-4">
       {items.map((item) => (
         <ItemCard key={item.id} item={item} onSuccess={onSuccess} onShowModal={onShowModal} />

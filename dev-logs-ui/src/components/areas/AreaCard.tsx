@@ -1,6 +1,6 @@
 import { FaChevronRight, FaEllipsisV } from 'react-icons/fa';
-import type { AreaInfo } from '../types';
-import { deleteArea } from '../services/AreaService';
+import type { AreaInfo } from '../../types';
+import { deleteArea } from '../../services/AreaService';
 import { useNavigate } from 'react-router-dom';
 
 type AreaCardProps = {
@@ -42,7 +42,7 @@ const AreaCard = ({ area, onSuccess, onShowModal }: AreaCardProps) => {
             </ul>
           </div>
         </div>
-        <div className="flex items-center gap-4 " onClick={handleAreaClick}>
+        <div className="flex items-center justify-between mt-4" onClick={handleAreaClick}>
           <p className="text-base">{area.description}</p>
           <FaChevronRight />
         </div>

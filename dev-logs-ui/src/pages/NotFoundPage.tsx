@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import { FaExclamationTriangle } from 'react-icons/fa';
 
-// TODO: Fix styling of this to be consistent with DevLogs
 const NotFoundPage = () => {
   return (
     <section className="text-center flex flex-col justify-center items-center h-96">

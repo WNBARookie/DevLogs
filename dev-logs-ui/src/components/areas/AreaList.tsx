@@ -1,4 +1,4 @@
-import type { AreaInfo } from '../types';
+import type { AreaInfo } from '../../types';
 import AreaCard from './AreaCard';
 
 type AreaListProps = {
@@ -9,7 +9,7 @@ type AreaListProps = {
 
 const AreaList = ({ areas, onSuccess, onShowModal }: AreaListProps) => {
   return areas && areas.length > 0 ? (
-    <div className="grid grid-cols-3 gap-8">
+    <div className="grid md:grid-cols-3 gap-8">
       {areas.map((area) => (
         <AreaCard key={area.id} area={area} onSuccess={onSuccess} onShowModal={onShowModal} />
       ))}

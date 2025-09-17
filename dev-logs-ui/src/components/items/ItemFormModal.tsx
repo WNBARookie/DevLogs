@@ -1,12 +1,12 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useState, useEffect, useRef } from 'react';
-import type { CreateItemRequestBody, ItemInfo, UpdateItemRequestBody } from '../types';
+import type { CreateItemRequestBody, ItemInfo, UpdateItemRequestBody } from '../../types';
 import * as Yup from 'yup';
 import { useForm } from 'react-hook-form';
-import { updateItem, createItem } from '../services/ItemService';
+import { updateItem, createItem } from '../../services/ItemService';
 import { FaTimes } from 'react-icons/fa';
 import { DayPicker } from 'react-day-picker';
-import 'react-day-picker/dist/style.css'; // You might need to import the base styles for DayPicker
+import 'react-day-picker/dist/style.css';
 
 type ItemFormModalProps = {
   open: boolean;
@@ -36,10 +36,11 @@ const ItemFormModal = ({ open, onClose, onSuccess, item, projectId }: ItemFormMo
     reset,
     setValue,
     watch,
-    formState: { errors, touchedFields },
+    formState: { errors, touchedFields, isValid },
   } = useForm<CreateItemRequestBody>({
     resolver: yupResolver(validation),
     defaultValues: { title: '', description: '', whatWentWell: '', whatDidNotGoWell: '', lessonsLearned: '', dateCompleted: new Date() },
+    mode: 'onChange',
   });
 
   const dateCompleted = watch('dateCompleted');
@@ -239,9 +240,9 @@ const ItemFormModal = ({ open, onClose, onSuccess, item, projectId }: ItemFormMo
           <div className="flex items-center gap-4 mx-20">
             <button
               type="submit"
-              className="w-full text-white bg-blue-500 hover:bg-blue-700 
-                             focus:ring-4 focus:outline-none focus:ring-primary-300 
-                             font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+              disabled={!isValid}
+              className={`w-full text-white font-medium rounded-lg text-sm px-5 py-2.5 text-center
+                ${!isValid ? 'bg-blue-400 cursor-not-allowed' : 'bg-blue-500 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-primary-300'}`}
             >
               {isAddingItem ? 'Add' : 'Edit'}
             </button>

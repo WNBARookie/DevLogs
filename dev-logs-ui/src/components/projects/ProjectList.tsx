@@ -1,5 +1,4 @@
-import React from 'react';
-import type { ProjectInfo } from '../types';
+import type { ProjectInfo } from '../../types';
 import ProjectCard from './ProjectCard';
 
 type ProjectListProps = {
@@ -10,7 +9,7 @@ type ProjectListProps = {
 
 const ProjectList = ({ projects, onSuccess, onShowModal }: ProjectListProps) => {
   return projects && projects.length > 0 ? (
-    <div className="grid grid-cols-3 gap-8">
+    <div className="grid md:grid-cols-3 gap-8">
       {projects.map((project) => (
         <ProjectCard key={project.id} project={project} onSuccess={onSuccess} onShowModal={onShowModal} />
       ))}

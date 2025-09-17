@@ -21,13 +21,7 @@ const Navbar = () => {
                 Logout
               </button>
             </div>
-          ) : // <div className="flex items-center gap-6">
-          //   <Link to="/login">Login</Link>
-          //   <Link to="/signup" className="bg-blue-500 hover:bg-blue-700 rounded-lg px-6 py-2 text-center">
-          //     Sign Up
-          //   </Link>
-          // </div>
-          null}
+          ) : null}
         </div>
       ) : null}
     </>

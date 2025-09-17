@@ -1,7 +1,7 @@
 import { FaEllipsisV, FaChevronRight } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
-import { deleteProject } from '../services/ProjectService';
-import type { ProjectInfo } from '../types';
+import { deleteProject } from '../../services/ProjectService';
+import type { ProjectInfo } from '../../types';
 
 type ProjectCardProps = {
   project: ProjectInfo;
@@ -42,7 +42,7 @@ const ProjectCard = ({ project, onSuccess, onShowModal }: ProjectCardProps) => {
             </ul>
           </div>
         </div>
-        <div className="flex items-center gap-4 " onClick={handleProjectClick}>
+        <div className="flex items-center justify-between mt-4" onClick={handleProjectClick}>
           <p className="text-base">{project.description}</p>
           <FaChevronRight />
         </div>

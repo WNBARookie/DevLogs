@@ -1,5 +1,5 @@
-import type { ItemInfo } from '../types';
-import { deleteItem } from '../services/ItemService';
+import type { ItemInfo } from '../../types';
+import { deleteItem } from '../../services/ItemService';
 
 type ItemCardProps = {
   item: ItemInfo;

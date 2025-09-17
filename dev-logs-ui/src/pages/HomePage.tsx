@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react';
 import { getAreas } from '../services/AreaService';
 import type { AreaInfo } from '../types';
 import Spinner from '../components/Spinner';
-import AreaList from '../components/AreaList';
+import AreaList from '../components/areas/AreaList';
 import { FaPlus } from 'react-icons/fa';
 
-import AreaFormModal from '../components/AreaFormModal';
+import AreaFormModal from '../components/areas/AreaFormModal';
 
 const HomePage = () => {
   const [areas, setAreas] = useState<AreaInfo[] | null>(null);

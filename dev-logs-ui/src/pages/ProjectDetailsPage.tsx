@@ -3,8 +3,8 @@ import type { ItemInfo, ProjectInfo } from '../types';
 import { useEffect, useState } from 'react';
 import { getProjectDetails, getProjectSummary } from '../services/ProjectService';
 import { FaLightbulb, FaPlus, FaTimes } from 'react-icons/fa';
-import ItemFormModal from '../components/ItemFormModal';
-import ItemList from '../components/ItemList';
+import ItemFormModal from '../components/items/ItemFormModal';
+import ItemList from '../components/items/ItemList';
 import Spinner from '../components/Spinner';
 import { FaArrowsRotate } from 'react-icons/fa6';
 

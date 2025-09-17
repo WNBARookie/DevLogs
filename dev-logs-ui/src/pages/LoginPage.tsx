@@ -1,4 +1,3 @@
-// import Spinner from '../components/Spinner';
 import { useAuth } from '../context/useAuth';
 import type { AuthenticateUserRequestBody } from '../types';
 import * as Yup from 'yup';
