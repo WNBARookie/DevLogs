@@ -7,7 +7,6 @@ import React from 'react';
 import axios from 'axios';
 
 type UserContextType = {
-  //   user: UserInfo | null;
   token: string | null;
   registerUser: (requestBody: CreateUserRequestBody) => void;
   loginUser: (requestBody: AuthenticateUserRequestBody) => void;

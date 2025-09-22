@@ -24,11 +24,11 @@ const ProjectCard = ({ project, onSuccess, onShowModal }: ProjectCardProps) => {
   };
 
   return (
-    <div className=" rounded shadow-lg">
+    <div className=" rounded shadow-lg" data-testid="project-card">
       <div className="px-6 py-4">
         <div className="flex items-center justify-between">
           <div className="font-bold text-xl mb-2">{project.title}</div>
-          <div className="dropdown">
+          <div className="dropdown" data-testid="card-menu-button">
             <div tabIndex={0} className="">
               <FaEllipsisV />
             </div>
@@ -42,7 +42,7 @@ const ProjectCard = ({ project, onSuccess, onShowModal }: ProjectCardProps) => {
             </ul>
           </div>
         </div>
-        <div className="flex items-center justify-between mt-4" onClick={handleProjectClick}>
+        <div className="flex items-center justify-between mt-4" onClick={handleProjectClick} data-testid="project-card-footer">
           <p className="text-base">{project.description}</p>
           <FaChevronRight />
         </div>

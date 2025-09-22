@@ -90,8 +90,8 @@ const ProjectDetailsPage = () => {
         {' '}
         <h1 className="text-4xl font-bold">{project?.title}</h1>
         <div className="flex items-center justify-between gap-8">
-          <FaLightbulb className="text-2xl btn btn-sm btn-circle btn-ghost text-amber-600" onClick={handleOpenGenerateSummaryDialog} />
-          <FaPlus className="text-2xl btn btn-sm btn-circle btn-ghost" onClick={() => onShowModal(null)} />
+          <FaLightbulb data-testid="summary-button" className="text-2xl btn btn-sm btn-circle btn-ghost text-amber-600" onClick={handleOpenGenerateSummaryDialog} />
+          <FaPlus data-testid="add-button" className="text-2xl btn btn-sm btn-circle btn-ghost" onClick={() => onShowModal(null)} />
         </div>
       </div>
       <div>
@@ -100,8 +100,8 @@ const ProjectDetailsPage = () => {
             <div className="flex items-center justify-between mb-4">
               <h1 className="text-xl font-bold">Summary of Items</h1>
               <div className="flex items-center justify-between gap-4">
-                <FaArrowsRotate className="btn btn-sm btn-circle btn-ghost" onClick={handleRefreshGridSummary} />
-                <FaTimes className="btn btn-sm btn-circle btn-ghost" onClick={handleCloseGenerateSummaryDialog} />
+                <FaArrowsRotate data-testid="refresh-button" className="btn btn-sm btn-circle btn-ghost" onClick={handleRefreshGridSummary} />
+                <FaTimes data-testid="close-button" className="btn btn-sm btn-circle btn-ghost" onClick={handleCloseGenerateSummaryDialog} />
               </div>
             </div>
 

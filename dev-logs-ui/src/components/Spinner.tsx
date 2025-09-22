@@ -10,7 +10,10 @@ const override = {
 };
 
 const Spinner = ({ loading }: SpinnerProps) => {
-  return <ClipLoader color="#2b7fff" loading={loading} cssOverride={override} size={150} />;
+  if (!loading) {
+    return null;
+  }
+  return <ClipLoader color="#2b7fff" loading={loading} cssOverride={override} size={150} data-testid="spinner" />;
 };
 
 export default Spinner;

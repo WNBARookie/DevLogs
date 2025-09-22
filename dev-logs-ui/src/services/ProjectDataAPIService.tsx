@@ -44,7 +44,7 @@ export const updateProjectAPI = async (requestBody: UpdateProjectRequestBody) =>
   }
 };
 
-export const getProjectSumamryAPI = async (id: string) => {
+export const getProjectSummaryAPI = async (id: string) => {
   try {
     const data = await axios.get<ProjectSummary>(EndpointsConfig.projectData.getProjectSummary.replace(':id', id));
 

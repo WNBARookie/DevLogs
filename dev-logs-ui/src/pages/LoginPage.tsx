@@ -38,6 +38,7 @@ const LoginPage = () => {
                   id="email"
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                   placeholder="Email"
+                  data-testid="email-field"
                   {...register('email')}
                 />
                 {errors.email ? <p className="text-red-500">{errors.email.message}</p> : ''}
@@ -49,6 +50,7 @@ const LoginPage = () => {
                 <input
                   type="password"
                   id="password"
+                  data-testid="password-field"
                   placeholder="••••••••"
                   {...register('password')}
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
@@ -57,13 +59,14 @@ const LoginPage = () => {
               </div>
               <button
                 type="submit"
+                data-testid="login-button"
                 className="w-full text-white bg-blue-500 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
               >
                 Sign in
               </button>
               <p className="text-sm font-light text-gray-500">
                 Don’t have an account yet?{' '}
-                <Link to="/signup" className="font-medium text-primary-600 hover:underline">
+                <Link data-testid="signup-button" to="/signup" className="font-medium text-primary-600 hover:underline">
                   Sign up
                 </Link>
               </p>

@@ -16,9 +16,11 @@ const ItemCard = ({ item, onSuccess, onShowModal }: ItemCardProps) => {
   };
 
   return (
-    <div className="collapse collapse-arrow bg-gray-200 rounded shadow-lg">
+    <div className="collapse collapse-arrow bg-gray-200 rounded shadow-lg" data-testid="item-card">
       <input type="checkbox" name="my-accordion-2" />
-      <div className="collapse-title font-semibold">{item.title}</div>
+      <div className="collapse-title font-semibold" data-testid="card-menu-button">
+        {item.title}
+      </div>
       <div className="collapse-content text-sm">
         <div className="">
           <div className="grid grid-cols-5 gap-4 mb-4">

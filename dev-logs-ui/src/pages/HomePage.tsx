@@ -50,7 +50,7 @@ const HomePage = () => {
       <div className="flex items-center justify-between mb-6">
         {' '}
         <h1 className="text-4xl font-bold">Welcome</h1>
-        <FaPlus className="text-2xl btn btn-sm btn-circle btn-ghost" onClick={() => onShowModal(null)} />
+        <FaPlus data-testid="add-button" className="text-2xl btn btn-sm btn-circle btn-ghost" onClick={() => onShowModal(null)} />
       </div>
       {loading ? <Spinner loading={loading} /> : <AreaList areas={areas} onSuccess={onSuccess} onShowModal={onShowModal} />}
 

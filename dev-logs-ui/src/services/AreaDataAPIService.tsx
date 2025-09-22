@@ -55,7 +55,7 @@ export const updateAreaAPI = async (requestBody: UpdateAreaRequestBody) => {
   }
 };
 
-export const getAreaSumamryAPI = async (id: string) => {
+export const getAreaSummaryAPI = async (id: string) => {
   try {
     const data = await axios.get<AreaSummary>(EndpointsConfig.areaData.getAreaSummary.replace(':id', id));
 

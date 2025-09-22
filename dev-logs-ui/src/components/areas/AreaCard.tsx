@@ -24,11 +24,11 @@ const AreaCard = ({ area, onSuccess, onShowModal }: AreaCardProps) => {
   };
 
   return (
-    <div className=" rounded shadow-lg">
+    <div className="rounded shadow-lg" data-testid="area-card">
       <div className="px-6 py-4">
         <div className="flex items-center justify-between">
           <div className="font-bold text-xl mb-2">{area.title}</div>
-          <div className="dropdown">
+          <div className="dropdown" data-testid="card-menu-button">
             <div tabIndex={0} className="">
               <FaEllipsisV />
             </div>
@@ -42,7 +42,7 @@ const AreaCard = ({ area, onSuccess, onShowModal }: AreaCardProps) => {
             </ul>
           </div>
         </div>
-        <div className="flex items-center justify-between mt-4" onClick={handleAreaClick}>
+        <div className="flex items-center justify-between mt-4" onClick={handleAreaClick} data-testid="area-card-footer">
           <p className="text-base">{area.description}</p>
           <FaChevronRight />
         </div>

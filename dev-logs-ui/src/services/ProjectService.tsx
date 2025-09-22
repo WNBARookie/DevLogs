@@ -1,6 +1,6 @@
 import { toast } from 'react-toastify';
 import type { ApiResponse, CreateProjectRequestBody, ProjectDetails, ProjectSummary, UpdateProjectRequestBody } from '../types';
-import { createProjectAPI, deleteProjectAPI, getProjectDetailsAPI, getProjectSumamryAPI, updateProjectAPI } from './ProjectDataAPIService';
+import { createProjectAPI, deleteProjectAPI, getProjectDetailsAPI, getProjectSummaryAPI, updateProjectAPI } from './ProjectDataAPIService';
 
 export const createProject = async (requestBody: CreateProjectRequestBody): Promise<ApiResponse | null> => {
   try {
@@ -59,7 +59,7 @@ export const updateProject = async (requestBody: UpdateProjectRequestBody): Prom
 
 export const getProjectSummary = async (id: string): Promise<ProjectSummary | null> => {
   try {
-    const res = await getProjectSumamryAPI(id);
+    const res = await getProjectSummaryAPI(id);
     if (res && res.data) {
       return res.data;
     }

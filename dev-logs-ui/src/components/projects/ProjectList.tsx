@@ -11,7 +11,9 @@ const ProjectList = ({ projects, onSuccess, onShowModal }: ProjectListProps) => 
   return projects && projects.length > 0 ? (
     <div className="grid md:grid-cols-3 gap-8">
       {projects.map((project) => (
-        <ProjectCard key={project.id} project={project} onSuccess={onSuccess} onShowModal={onShowModal} />
+        <div data-testid="project-card-from-list">
+          <ProjectCard key={project.id} project={project} onSuccess={onSuccess} onShowModal={onShowModal} />
+        </div>
       ))}
     </div>
   ) : (

@@ -116,11 +116,13 @@ const ItemFormModal = ({ open, onClose, onSuccess, item, projectId }: ItemFormMo
   }, [showDayPicker]);
 
   return (
-    <dialog open={open} className="modal">
+    <dialog open={open} className="modal" data-testid="dialog">
       <div className="modal-box bg-gray-100 relative rounded-lg">
-        <FaTimes className="btn btn-sm btn-circle btn-ghost absolute right-4 top-4" onClick={handleCloseDialog} />
+        <FaTimes className="btn btn-sm btn-circle btn-ghost absolute right-4 top-4" onClick={handleCloseDialog} data-testid="close-button" />
 
-        <h2 className="font-bold text-3xl text-center my-2">{isAddingItem ? 'Add Item' : 'Edit Item'}</h2>
+        <h2 className="font-bold text-3xl text-center my-2" data-testid="dialog-title">
+          {isAddingItem ? 'Add Item' : 'Edit Item'}
+        </h2>
 
         <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit(handleCreateItem)}>
           <div>
@@ -134,6 +136,7 @@ const ItemFormModal = ({ open, onClose, onSuccess, item, projectId }: ItemFormMo
               {...register('title')}
               className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg 
                              focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+              data-testid="title-field"
             />
             {errors.title && touchedFields.title && <p className="text-red-500">{errors.title.message}</p>}
           </div>
@@ -149,6 +152,7 @@ const ItemFormModal = ({ open, onClose, onSuccess, item, projectId }: ItemFormMo
               {...register('description')}
               className="resize-none bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg 
                              focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+              data-testid="description-field"
             />
             {errors.description && touchedFields.description && <p className="text-red-500">{errors.description.message}</p>}
           </div>
@@ -164,6 +168,7 @@ const ItemFormModal = ({ open, onClose, onSuccess, item, projectId }: ItemFormMo
               {...register('whatWentWell')}
               className="resize-none bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg 
                              focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+              data-testid="what-went-well-field"
             />
             {errors.whatWentWell && touchedFields.whatWentWell && <p className="text-red-500">{errors.whatWentWell.message}</p>}
           </div>
@@ -179,6 +184,7 @@ const ItemFormModal = ({ open, onClose, onSuccess, item, projectId }: ItemFormMo
               {...register('whatDidNotGoWell')}
               className="resize-none bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg 
                              focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+              data-testid="what-did-not-go-well-field"
             />
             {errors.whatDidNotGoWell && touchedFields.whatDidNotGoWell && <p className="text-red-500">{errors.whatDidNotGoWell.message}</p>}
           </div>
@@ -194,6 +200,7 @@ const ItemFormModal = ({ open, onClose, onSuccess, item, projectId }: ItemFormMo
               {...register('lessonsLearned')}
               className="resize-none bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg 
                              focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+              data-testid="lessons-learned-field"
             />
             {errors.lessonsLearned && touchedFields.lessonsLearned && <p className="text-red-500">{errors.lessonsLearned.message}</p>}
           </div>
@@ -219,6 +226,7 @@ const ItemFormModal = ({ open, onClose, onSuccess, item, projectId }: ItemFormMo
               {...register('dateCompleted')}
               className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg 
                focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+              data-testid="date-completed-field"
             />
 
             {showDayPicker && (
@@ -243,6 +251,7 @@ const ItemFormModal = ({ open, onClose, onSuccess, item, projectId }: ItemFormMo
               disabled={!isValid}
               className={`w-full text-white font-medium rounded-lg text-sm px-5 py-2.5 text-center
                 ${!isValid ? 'bg-blue-400 cursor-not-allowed' : 'bg-blue-500 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-primary-300'}`}
+              data-testid="dialog-action-button"
             >
               {isAddingItem ? 'Add' : 'Edit'}
             </button>
