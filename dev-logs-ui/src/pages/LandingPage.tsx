@@ -17,7 +17,7 @@ export default function LandingPage() {
         <h1 className="text-5xl font-extrabold">DevLogs</h1>
         <p className="text-xl px-10">A simple way to log projects, reflect on skills, and grow as a software engineer.</p>
         <div className="space-x-4">
-          <Link to="/login" className="text-white bg-blue-500 px-6 py-3 rounded-xl shadow hover:bg-blue-700 font-medium">
+          <Link to="/login" className="text-white bg-blue-500 px-6 py-3 rounded-xl shadow hover:bg-blue-700 font-medium" data-testid="live-demo-button">
             Live Demo
           </Link>
           <a href="https://github.com/WNBARookie/DevLogs" target="_blank" className="border border-white px-6 py-3 rounded-xl hover:bg-white hover:text-gray-900 font-medium">

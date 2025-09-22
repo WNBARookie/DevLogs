@@ -105,7 +105,7 @@ const ProjectDetailsPage = () => {
               </div>
             </div>
 
-            {loadingProjectSummary ? <Spinner loading={loadingProjectSummary} /> : <p>{projectSummary}</p>}
+            {loadingProjectSummary ? <Spinner loading={loadingProjectSummary} /> : <p data-testid="summary-text">{projectSummary}</p>}
           </div>
         )}
       </div>

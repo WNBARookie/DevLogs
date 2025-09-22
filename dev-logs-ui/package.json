@@ -12,7 +12,8 @@
     "build:docker": "docker compose --project-name dev-logs-ui build",
     "docker": "docker compose up",
     "test": "vitest",
-    "test:ui": "vitest --ui --coverage"
+    "test:ui": "vitest --ui --coverage",
+    "cy": "npx cypress open"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.1",
@@ -32,6 +33,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.33.0",
+    "@testing-library/cypress": "^10.1.0",
     "@testing-library/jest-dom": "^6.8.0",
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^14.6.1",
@@ -41,6 +43,7 @@
     "@vitest/coverage-v8": "^3.2.4",
     "@vitest/ui": "^3.2.4",
     "autoprefixer": "^10.4.21",
+    "cypress": "^15.2.0",
     "daisyui": "^5.1.10",
     "eslint": "^9.33.0",
     "eslint-plugin-react-hooks": "^5.2.0",

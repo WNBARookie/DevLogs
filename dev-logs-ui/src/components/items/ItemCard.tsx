@@ -61,10 +61,10 @@ const ItemCard = ({ item, onSuccess, onShowModal }: ItemCardProps) => {
           </div>
 
           <div className="flex items-center gap-4">
-            <button type="button" onClick={() => onShowModal(item)} className="bg-gray-500 rounded-lg px-8 py-2 text-white">
+            <button data-testid="edit-button" type="button" onClick={() => onShowModal(item)} className="bg-gray-500 rounded-lg px-8 py-2 text-white">
               Edit
             </button>
-            <button type="button" onClick={handleDeleteItem} className="bg-red-500 rounded-lg px-8 py-2 text-white">
+            <button data-testid="delete-button" type="button" onClick={handleDeleteItem} className="bg-red-500 rounded-lg px-8 py-2 text-white">
               Delete
             </button>
           </div>

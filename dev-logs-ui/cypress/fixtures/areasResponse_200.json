@@ -1,0 +1,17 @@
+[
+  {
+    "id": "68c7331f4161856855567ed3",
+    "title": "Educational",
+    "description": "Anything related to school or certifications!"
+  },
+  {
+    "id": "68c733344161856855567ed9",
+    "title": "Personal",
+    "description": "Side projects!"
+  },
+  {
+    "id": "68c7334c4161856855567edf",
+    "title": "Professional",
+    "description": "For my job as a full-stack software engineer!"
+  }
+]

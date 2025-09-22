@@ -1,0 +1,36 @@
+{
+  "project": {
+    "id": "68c8a15d17c8bc5b82492e74",
+    "title": "Google UX Coursera",
+    "description": "Taking the Google UX course on Coursera to learn about UI/UX design"
+  },
+  "items": [
+    {
+      "id": "68c94030ae86718427440fe2",
+      "title": "Empathy maps",
+      "description": "A tool used for condensing results gathered by interviews. Can be a single user or multiple users of a single group. Has quadrants for what a user says, thinks, does, and feel.",
+      "whatWentWell": "It seems straightforward and easy to understand",
+      "whatDidNotGoWell": "Nothing, was pretty straightforward",
+      "lessonsLearned": "Learned a way of condensing interview results",
+      "dateCompleted": "2025-09-16T10:44:26.069Z"
+    },
+    {
+      "id": "68c94114ae86718427440fea",
+      "title": "Goal statement",
+      "description": "A way of explaining what a product lets users do, who the action affects, why the action positively affects users, and how the effectiveness of the product is measured.",
+      "whatWentWell": "Was able to understand it well and work through an example",
+      "whatDidNotGoWell": "Tried it on my own for a project idea of mine, and realized that there were some gaps I had in my initial brainstorming",
+      "lessonsLearned": "How to explain the goal of a product in a concise and effective manner",
+      "dateCompleted": "2025-09-17T05:00:00.000Z"
+    },
+    {
+      "id": "68c94199ae86718427440ff2",
+      "title": "Rapid sketching",
+      "description": "A way of coming up with ideas in researching. Do this by using a pen and paper to quickly come up with 8 ideas of something related to problem statement with 1 minute dedicated to each section",
+      "whatWentWell": "Got to do something a bit more creative",
+      "whatDidNotGoWell": "I had a hard time coming up with variations of the design",
+      "lessonsLearned": "This is a useful tool, and I need to work on being able to come up with more variations of the design",
+      "dateCompleted": "2025-09-19T05:00:00.000Z"
+    }
+  ]
+}

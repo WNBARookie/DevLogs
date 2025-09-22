@@ -1,0 +1,24 @@
+{
+  "area": {
+    "id": "68c7331f4161856855567ed3",
+    "title": "Educational",
+    "description": "Anything related to school or certifications!"
+  },
+  "projects": [
+    {
+      "id": "68c8a15d17c8bc5b82492e74",
+      "title": "Google UX Coursera",
+      "description": "Taking the Google UX course on Coursera to learn about UI/UX design"
+    },
+    {
+      "id": "68c8a19817c8bc5b82492e7c",
+      "title": "TrigRPG",
+      "description": "Capstone project as a computer science major in which my team and I are creating an educational game in Godot"
+    },
+    {
+      "id": "68c8a1ce17c8bc5b82492e84",
+      "title": "Programming Challenges",
+      "description": "Taking a course called Challenges that consists of solving lots of Leetcode-style problems"
+    }
+  ]
+}

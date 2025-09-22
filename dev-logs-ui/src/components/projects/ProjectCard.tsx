@@ -24,20 +24,26 @@ const ProjectCard = ({ project, onSuccess, onShowModal }: ProjectCardProps) => {
   };
 
   return (
-    <div className=" rounded shadow-lg" data-testid="project-card">
+    <div className=" rounded shadow-lg h-full" data-testid="project-card">
       <div className="px-6 py-4">
         <div className="flex items-center justify-between">
-          <div className="font-bold text-xl mb-2">{project.title}</div>
+          <div data-testid="project-card-title" className="font-bold text-xl mb-2">
+            {project.title}
+          </div>
           <div className="dropdown" data-testid="card-menu-button">
             <div tabIndex={0} className="">
               <FaEllipsisV />
             </div>
             <ul tabIndex={0} className="dropdown-content bg-gray-100 menu rounded-box z-1 w-52 p-2 shadow-sm">
               <li>
-                <a onClick={() => onShowModal(project)}>Edit</a>
+                <a data-testid="edit-button" onClick={() => onShowModal(project)}>
+                  Edit
+                </a>
               </li>
               <li>
-                <a onClick={handleDeleteProject}>Delete</a>
+                <a data-testid="delete-button" onClick={handleDeleteProject}>
+                  Delete
+                </a>
               </li>
             </ul>
           </div>

@@ -24,7 +24,7 @@ const AreaCard = ({ area, onSuccess, onShowModal }: AreaCardProps) => {
   };
 
   return (
-    <div className="rounded shadow-lg" data-testid="area-card">
+    <div className="rounded shadow-lg h-full" data-testid="area-card">
       <div className="px-6 py-4">
         <div className="flex items-center justify-between">
           <div className="font-bold text-xl mb-2">{area.title}</div>
@@ -34,10 +34,14 @@ const AreaCard = ({ area, onSuccess, onShowModal }: AreaCardProps) => {
             </div>
             <ul tabIndex={0} className="dropdown-content bg-gray-100 menu rounded-box z-1 w-52 p-2 shadow-sm">
               <li>
-                <a onClick={() => onShowModal(area)}>Edit</a>
+                <a data-testid="edit-button" onClick={() => onShowModal(area)}>
+                  Edit
+                </a>
               </li>
               <li>
-                <a onClick={handleDeleteArea}>Delete</a>
+                <a data-testid="delete-button" onClick={handleDeleteArea}>
+                  Delete
+                </a>
               </li>
             </ul>
           </div>

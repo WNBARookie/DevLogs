@@ -1,0 +1,7 @@
+{
+  "summary": "Error summary",
+  "details": "Error details",
+  "status": 400,
+  "instance": "/api",
+  "timeStamp": "2025-09-22T22:03:32.569Z"
+}

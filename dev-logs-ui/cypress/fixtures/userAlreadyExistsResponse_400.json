@@ -1,0 +1,7 @@
+{
+  "summary": "User already exists",
+  "details": "User already exists",
+  "status": 400,
+  "instance": "/api/users/register",
+  "timeStamp": "2025-09-22T19:48:02.828Z"
+}

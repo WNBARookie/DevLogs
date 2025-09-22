@@ -1,0 +1,7 @@
+{
+  "summary": "Invalid credentials",
+  "details": "Credentials not valid",
+  "status": 400,
+  "instance": "/api/users/login",
+  "timeStamp": "2025-09-22T19:18:03.261Z"
+}
