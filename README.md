@@ -8,7 +8,7 @@ The goal is to provide a single place to organize projects, reflect on progress,
 
 ## 🚀 Demo
 
-👉 [Live Demo](#)
+👉 [Live Demo](https://www.dev-logs.dev)
 
 ![App Snapshot](AppPreview.png 'App Snapshot')
 
